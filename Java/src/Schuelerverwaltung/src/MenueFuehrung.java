@@ -5,7 +5,7 @@ public class MenueFuehrung {
     Scanner sc = new Scanner(System.in);
 
     public Schueler erstelleUser() {
-        breakLine();
+        breakLine();                                      //Hallo 
         System.out.println("Gebe den Vornamen ein");
         String pVorname = sc.nextLine();
 
