@@ -13,7 +13,9 @@
 ## 1. Beschreibung der Anwendung
 
 ### **Grobbeschreibung** 
-Wir implementieren eine Notenverwaltng für Schüler. In dieser Anwendung sollen Nutzer ihre Fächer (inkl. unterschiedlicher Jahre) verwalten können. Dabei sollen neben der Noten auch der zugehörige Fachlehrer und das Jahr gespeichert werden. 
+Wir implementieren eine Notenverwaltng für Schüler. In dieser Anwendung sollen Nutzer ihre Fächer (inkl. unterschiedlicher Jahre) verwalten können. Dabei sollen neben der Noten auch der zugehörige Fachlehrer und das Jahr gespeichert werden.
+
+
 
 ### **Menüführung**
 Die Menüfuhrung ist rein Textuell. Beim Start der Anwendung gibt es eine Passwortabfrage und danach kann der Nutzer wählen zwischen:
