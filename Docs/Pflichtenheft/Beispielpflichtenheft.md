@@ -13,8 +13,7 @@
 ## 1. Beschreibung der Anwendung
 
 ### **Grobbeschreibung** 
-Wir implementieren eine Notenverwaltng für Schüler. In dieser Anwendung sollen Nutzer ihre Fächer (inkl. unterschiedlicher Jahre) verwalten können. Dabei sollen neben der Noten auch der zugehörige Fachlehrer und das Jahr gespeichert werden.
-
+Wir wollen ein Aktien Portfolio erstellen, indem die allgemeinen Funktionen eines Aktien Portfolios vorhanden sind. Dieses soll somit den Wert des Porfolio wiedergeben, den einzelnen Wert der Aktie und den Anteil. Auch viele weitere Funktionen sollen in den Aktien Portfolio vorhanden sein. Auch eine Art von Stock market soll in dieser intigriert sein.
 
 
 ### **Menüführung**
