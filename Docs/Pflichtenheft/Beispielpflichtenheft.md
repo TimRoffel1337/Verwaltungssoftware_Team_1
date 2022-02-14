@@ -15,6 +15,7 @@
 ### **Grobbeschreibung** 
 Wir wollen ein Aktien Portfolio erstellen, indem die allgemeinen Funktionen eines Aktien Portfolios vorhanden sind. Dieses soll somit den Wert des Porfolio wiedergeben, den einzelnen Wert der Aktie und den Anteil. Auch viele weitere Funktionen sollen in den Aktien Portfolio vorhanden sein. Auch eine Art von Stock market soll in dieser intigriert sein.
 
+
 ### **Menüführung**
 Die Menüfuhrung ist rein Textuell. Beim Start der Anwendung gibt es eine Passwortabfrage und danach kann der Nutzer wählen zwischen:
 - Fach anlegen
