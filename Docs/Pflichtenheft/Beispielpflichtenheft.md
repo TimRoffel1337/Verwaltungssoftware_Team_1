@@ -17,7 +17,7 @@ Wir wollen ein Aktien Portfolio erstellen mit einer einfachen Menü führung vor
 
 
 ### **Menüführung**
-Bei der Menüführung Wird zuerst die Anmeldung bzw. die Regestierung durchgeführt. Hierzu wird ein Nutzername und das Passwort abgefragt, welches bei erstmaligen Regestieren gespeichert wird. Wenn diese Passwort nicht mit dem Nutzernamen Übereinstimmt wird der Nutzer zurück in den Amelde bereich gebracht. Wenn dieses Übereinstimmt kann der Nutzer auf sein Porfolio zugreifen. :
+Bei der Menüführung Wird zuerst die Anmeldung bzw. die Regestierung durchgeführt. Hierzu wird ein Nutzername und das Passwort abgefragt, welches bei erstmaligen Regestieren gespeichert wird. Wenn diese Passwort nicht mit dem Nutzernamen Übereinstimmt wird der Nutzer zurück in den Amelde bereich gebracht. Wenn dieses Übereinstimmt kann der Nutzer auf sein Porfolio zugreifen. 
 
 Funktionen:
 -Aufladen von Geld 
