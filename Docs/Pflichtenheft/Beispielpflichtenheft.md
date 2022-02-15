@@ -17,12 +17,16 @@ Wir wollen ein Aktien Portfolio erstellen mit einer einfachen Menü führung vor
 
 
 ### **Menüführung**
-Die Menüfuhrung ist rein Textuell. Beim Start der Anwendung gibt es eine Passwortabfrage und danach kann der Nutzer wählen zwischen:
-- Fach anlegen
-- Note für Fach eintragen
-  - (erst Auswahl für ein Fach und Jahr, dann eintragen)
-- Note für Fach anzeigen
-- abmelden
+Bei der Menüführung Wird zuerst die Anmeldung bzw. die Regestierung durchgeführt. Hierzu wird ein Nutzername und das Passwort abgefragt, welches bei erstmaligen Regestieren gespeichert wird. Wenn diese Passwort nicht mit dem Nutzernamen Übereinstimmt wird der Nutzer zurück in den Amelde bereich gebracht. Wenn dieses Übereinstimmt kann der Nutzer auf sein Porfolio zugreifen. 
+
+Funktionen:
+-Aufladen von Geld 
+-Kaufen und Verkaufen der Aktien 
+-Wert seines Portfolios abfragen 
+-Wert der einzelnen Aktien wiedergeben
+-Aktien Kurs nach gucken
+-Bilanz der Aktien angucken 
+-abmelden  
 
 ## 2. Beschreibung des Funktionsablaufes
 
