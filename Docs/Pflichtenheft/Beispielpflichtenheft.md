@@ -26,7 +26,8 @@ Funktionen:
 -Wert der einzelnen Aktien wiedergeben
 -Aktien Kurs nach gucken
 -Bilanz der Aktien angucken 
--abmelden  
+-Abmelden 
+
 
 ## 2. Beschreibung des Funktionsablaufes
 
