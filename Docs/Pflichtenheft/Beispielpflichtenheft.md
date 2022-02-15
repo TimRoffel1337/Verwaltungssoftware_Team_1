@@ -28,6 +28,7 @@ Funktionen:
 -Bilanz der Aktien angucken 
 -Abmelden 
 
+
 ## 2. Beschreibung des Funktionsablaufes
 
 ### **Menü anzeigen**
