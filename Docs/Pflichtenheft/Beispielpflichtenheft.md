@@ -45,7 +45,8 @@ Wenn man diesen Menüpunkt nutzt kann mann auf ein Virtuelles Konto zugreifen, w
 Dies kann man mit dem comment machen : _____________________ und anderherum mit _____________ machen. 
 ##### **Kaufen und Verkaufen** 
 Wenn dieser Menüpunkt wählt kommt man in die Ansicht verschiedner Aktien und deren Werte. 
-Dieser Beinhaltet genau so wie bei den Aktien Menüpunkt eine mit GUI erstellten Kurs der Aktie. So kann man nachvollziehen ob diese Aktie Stabil ist usw. Je mach dem hat die Aktie auch ihren Wert, welcher Steigen oder auch Fallen kann. Wenn man nun eine Aktie Kaufen will kann man mit dem Kapital des Menüpunkt "Lequide-Mittel" eine Aktien kaufen. Diesen kauf kann man aber in dem Kaufen und Verkaufen Menüpunkt tätigen. 
+Dieser Beinhaltet genau so wie bei den Aktien Menüpunkt eine mit GUI erstellten Kurs der Aktie. So kann man nachvollziehen ob diese Aktie Stabil ist usw. Je mach dem hat die Aktie auch ihren Wert, welcher Steigen oder auch Fallen kann. Wenn man nun eine Aktie Kaufen will kann man mit dem Kapital des Menüpunkt "Lequide-Mittel" eine Aktien kaufen. Diesen kauf kann man aber in dem Kaufen und Verkaufen Menüpunkt tätigen.
+
 
 ##### **Lequide-Mittel** 
 Unter diesem Menüpunkt kann man das Geld welches auf dem Portfolio hat  einsehen. Falls nun eine Aktie gekauft oder verkauft wird, dann vergrößert bzw. verkleinert sich der Geldbetrag im Menüpunkt "Lequide-Mittel".
