@@ -32,13 +32,34 @@ Bei der Menüführung wird zuerst die Anmeldung bzw. die Regestierung durchgefü
 - Bilanz 
 - Abmelden  
 
-### **Fach anlegen()**
+### **Finaz**
+
+
+
+### **Bilaz** (Vielleicht)
 #### **Beschreibung Funktion Finanzen**
-Nach der Anmeldung kann der Benutzer den Menüpunkt Finazen Ausführen. Dort wird er in ein weiteres Menü geführt. In diesem kann der Nutzer des Portfolios auf sein kompletten Finaz zweig zugreifen. Hierzu gehört das Einzahlen eigendes Geldes von ein Konto, das Kaufen und verkaufen von Aktien und das einsehen des Portfolio Wertes. Wenn man doch diesen Menüzweig wählen will kann man wieder ins "Main-Menü" zurück kehren. 
+Nach der Anmeldung kann der Benutzer den Menüpunkt Finazen Ausführen. Dort wird er in ein weiteres Menü geführt. In diesem kann der Nutzer des Portfolios auf sein kompletten Finaz zweig zugreifen. Hierzu gehört das Einzahlen eigendes Geldes von ein Konto, das Kaufen und verkaufen von Aktien und das einsehen des Portfolio Wertes. Auch das aufgelandene Geld mit welchen du traden kannst wir dir im Porfolio unter dem Menüpunkt Lequide-Mittel nachgucken.Wenn man doch diesen Menüzweig wählen will kann man wieder ins "Main-Menü" zurück kehren. 
+
+##### **Einazhalen und Auszahlen**
+Wenn man diesen Menüpunkt nutzt kann mann auf ein Virtuelles Konto zugreifen, welches jeder Nutzer beim einloggen erstellt bekommt. 1.000.000 ist das Kapital welches auf diesen Konto vorhanden sind. Wenn du nun den Konto ein bestimmten betrag entzieht wird dieses unter dem Menüpunkt "Lequide-Mittel" aufgeladen. Anders herum natürlich auch. 
+Dies kann man mit dem comment machen : _____________________ und anderherum mit _____________ machen. 
+##### **Kaufen und Verkaufen** 
+Wenn dieser Menüpunkt wählt kommt man in die Ansicht verschiedner Aktien und deren Werte. 
+Dieser Beinhaltet genau so wie bei den Aktien Menüpunkt eine mit GUI erstellten Kurs der Aktie. So kann man nachvollziehen ob diese Aktie Stabil ist usw. Je mach dem hat die Aktie auch ihren Wert, welcher Steigen oder auch Fallen kann. Wenn man nun eine Aktie Kaufen will kann man mit dem Kapital des Menüpunkt "Lequide-Mittel" eine Aktien kaufen. Diesen kauf kann man aber in dem Kaufen und Verkaufen Menüpunkt tätigen. 
+
+##### **Lequide-Mittel** 
+Unter diesem Menüpunkt kann man das Geld welches auf dem Portfolio hat  einsehen. Falls nun eine Aktie gekauft oder verkauft wird, dann vergrößert bzw. verkleinert sich der Geldbetrag im Menüpunkt "Lequide-Mittel".
+
+##### **Wert des Portfolios**
+In deisem Menüpunkt wird der ganz wert deines Portflios einsehen. Hierzu gehört der Anzahl an den einzelnen Aktien und den Gesamt-Wert des Aktien Portfolios ansehen. 
+
+
+### **Aktien**
 
 #### **Beschreibung Funktion Aktien** 
 Auch hier kann der Nutzer nach dem Anmelden auf ein Menüpunkt zugreifen, mit dem Namen Aktien.Somit ist dies auch ein weiters Untermenü. Heir kann der Nutzer die Kurse der Aktien nachgucken, die Anteile und Anzahlen der Aktien nachvollziehen. Auch das ansehen aderen Aktien kannst der Nutzer in diesen zeig machen. Somit sind auch 3 Menüpunkte in diesem Untermenü Vorhanden. Sobald man doch diesen Zweig nicht wählen will kann man per Knopfdruck zurück ins "Main-Menü".
 
+### **Bilaz** (Vielleicht)
 #### **Beschreibung Funktion Bilanz (Vielleicht)** 
 Nach der Ameldung kann der Benutzer auch auf dem Menüpunkt Bilanz zugreifen. In diesem Menüpunkt kann der Nutzer einsehen wie er in der letzten Zeit gewirtschaftet hat. Wenn man diese Funktion nicht mehr nutzten will kann man ins "Main-Menü" zurück kehren. 
 
