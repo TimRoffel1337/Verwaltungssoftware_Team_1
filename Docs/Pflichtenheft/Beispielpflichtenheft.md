@@ -51,11 +51,24 @@ Unter diesem Menüpunkt kann man das Geld welches auf dem Portfolio hat  einsehe
 ##### **Wert des Portfolios**
 In deisem Menüpunkt wird der ganz wert deines Portflios einsehen. Hierzu gehört der Anzahl an den einzelnen Aktien und den Gesamt-Wert des Aktien Portfolios ansehen. 
 
+##### **Zurück**
+Ein einfacher Menüpunkt, welcher dich zurück in das "Main-Menü" führt. 
+
 
 ### **Aktien**
 
 #### **Beschreibung Funktion Aktien** 
 Auch hier kann der Nutzer nach dem Anmelden auf ein Menüpunkt zugreifen, mit dem Namen Aktien.Somit ist dies auch ein weiters Untermenü. Heir kann der Nutzer die Kurse der Aktien nachgucken, die Anteile und Anzahlen der Aktien nachvollziehen. Auch das ansehen aderen Aktien kannst der Nutzer in diesen zeig machen. Somit sind auch 3 Menüpunkte in diesem Untermenü Vorhanden. Sobald man doch diesen Zweig nicht wählen will kann man per Knopfdruck zurück ins "Main-Menü".
+##### **Kurse** 
+In diesem Menüpunkt kann man einzelne Aktien ansehen und deren Kurse mit einem Linien Diagramm angezeigt. Hier kann man mithilfe der GUI ein Funktion fähige Kurs erstellen, der fallen und steigen kann. 
+
+##### **Aktien Antiele**
+Bei diesen Menüpunkt hast der Nutzer die Möglichkeit alle innhabende Aktien nach zu gucken und deren Anzahl. 
+
+##### **andere Aktien** 
+Bei dem Nutzen dieses Menüpunktes kann man alle an der "Börse" ansäsigen Aktien einsehen. Somit hat man die ganze übersich über alle Aktien die man erwerben kann.
+##### **Zurück**
+Ein einfacher Menüpunkt, welcher dich zurück in das "Main-Menü" führt.
 
 ### **Bilaz** (Vielleicht)
 #### **Beschreibung Funktion Bilanz (Vielleicht)** 
