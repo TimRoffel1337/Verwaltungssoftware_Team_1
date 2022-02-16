@@ -34,9 +34,6 @@ Bei der Menüführung wird zuerst die Anmeldung bzw. die Regestierung durchgefü
 
 ### **Finaz**
 
-
-
-### **Bilaz** (Vielleicht)
 #### **Beschreibung Funktion Finanzen**
 Nach der Anmeldung kann der Benutzer den Menüpunkt Finazen Ausführen. Dort wird er in ein weiteres Menü geführt. In diesem kann der Nutzer des Portfolios auf sein kompletten Finaz zweig zugreifen. Hierzu gehört das Einzahlen eigendes Geldes von ein Konto, das Kaufen und verkaufen von Aktien und das einsehen des Portfolio Wertes. Auch das aufgelandene Geld mit welchen du traden kannst wir dir im Porfolio unter dem Menüpunkt Lequide-Mittel nachgucken.Wenn man doch diesen Menüzweig wählen will kann man wieder ins "Main-Menü" zurück kehren. 
 
