@@ -13,7 +13,7 @@
 ## 1. Beschreibung der Anwendung
 
 ### **Grobbeschreibung** 
-Wir wollen ein Aktien Portfolio erstellen mit einer einfachen Menü führung vorhanden ist. Somit sollen Auch einfachere Nutzerdaten erstellt werden beim erst maligen einloggen ins Portfolio Automatische gespeichert werden. Diese sollen auch beim neuen einloggen in das Portfolio abgefragt werden. Wenn diese Nutzerdaten nicht mit dem eigentlichen übereinstimmen, soll die Person ins Menü zurück geführt werden. Indem Portfolio sollen die  allgemeinen Funktionen eines Aktien Portfolios vorhanden sind. Dieses soll somit den Wert des Porfolio wiedergeben, den einzelnen Wert der Aktie und den Anteil. Auch Funktionen wie das Kaufen und Verkauf von Aktien sollen hier möglich sein. Somit muss auch ein Aktien Kurs erstellt werden der wie im echten leben Steigen und Fallen kann, dies soll mit der hilfe von GUI ermöglicht werden. Auch das eigenständig ein und aus Zalen des Gewinnes soll auf ein Virtuelles Konto geschehen können. Ebendso wie eine Breite Varianz an Aktien die vom Nutzer gekauft werden können. Wenn dan der Nutzer Fertig ist mit seiner vorhaben, dann soll dieser sich abmelden können. Nach dem Abmelden soll der Nutzer zurück ins Menü geschickt werden. 
+Wir wollen ein Aktien Portfolio erstellen mit einer einfachen Menü führung vorhanden ist. Somit sollen Auch einfachere Nutzerdaten erstellt werden beim erst maligen einloggen ins Portfolio Automatische gespeichert werden. Diese sollen auch beim neuen einloggen in das Portfolio abgefragt werden. Wenn diese Nutzerdaten nicht mit dem eigentlichen übereinstimmen, soll die Person ins Menü zurück geführt werden. Indem Portfolio sollen die  allgemeinen Funktionen eines Aktien Portfolios vorhanden sind. Dieses soll somit den Wert des Porfolio wiedergeben, den einzelnen Wert der Aktie und den Anteil. Auch Funktionen wie das Kaufen und Verkauf von Aktien sollen hier möglich sein. Somit muss auch ein Aktien Kurs erstellt werden der wie im echten leben Steigen und Fallen kann. Auch das eigenständig ein und aus Zalen des Gewinnes soll auf ein Virtuelles Konto geschehen können. Ebendso wie eine Breite Varianz an Aktien die vom Nutzer gekauft werden können. Wenn dan der Nutzer Fertig ist mit seiner vorhaben, dann soll dieser sich abmelden können. Nach dem Abmelden soll der Nutzer zurück ins Menü geschickt werden. 
 
 
 ### **Menüführung**
@@ -27,9 +27,9 @@ Wir wollen ein Aktien Portfolio erstellen mit einer einfachen Menü führung vor
 #### **Beschreibung Funktion Menü anzeigen**
 Bei der Menüführung wird zuerst die Anmeldung bzw. die Regestierung durchgeführt. Hierzu wird ein Nutzername und das Passwort abgefragt, welches bei erstmaligen Regestieren gespeichert wird. Wenn diese Passwort nicht mit dem Nutzernamen Übereinstimmt wird der Nutzer zurück in den Amelde bereich gebracht. Wenn dieses Übereinstimmt kann der Nutzer auf sein Porfolio zugreifen. Dort kann er folgende Menü-Punkte nutzen.
 
-- Finazen  
-- Aktien 
-- Bilanz 
+- Finazen 
+-  Aktien 
+- Bilanz (vielleicht)
 - Abmelden  
 
 ### **Finaz**
@@ -74,8 +74,12 @@ Ein einfacher Menüpunkt, welcher dich zurück in das "Main-Menü" führt.
 #### **Beschreibung Funktion Bilanz (Vielleicht)** 
 Nach der Ameldung kann der Benutzer auch auf dem Menüpunkt Bilanz zugreifen. In diesem Menüpunkt kann der Nutzer einsehen wie er in der letzten Zeit gewirtschaftet hat. Wenn man diese Funktion nicht mehr nutzten will kann man ins "Main-Menü" zurück kehren. 
 
+### **Abmelden**
+
+Bei deisem Menüpunkt kannst der Nutzer aus dem Portfolio auloggen, falls er mit allen seinen Vorhaben fertig ist. 
+
 **Besonderheiten**
-Es können maximal 10 Fächer angelegt werden. Danach erfolgt eine Ausgabe: "Maximialanzahl der Fächer erreicht".
+Das eigentliche Programm läuft auf einen Server, die clients holen sich die daten von server. Die Aktien können nach bielieben hinzugefügt werden und haben kein maximum. Die Ersten beide Menüpunkte verfügen über ein Untern Menüpunkt. Ebendfalls besonders ist, dass man wieder in Main-Menü zurück kehren kann. Außerdem kann man nicht mehr Geld in die Aktien investieren, wenn das "Guthaben" bzw auch das Konto komplett leer sind. 
 
 
 #### **Diagramm (Aktivitätsdiagramm) Funktion Fach anlegen**
