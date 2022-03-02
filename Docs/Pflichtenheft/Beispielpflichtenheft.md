@@ -18,7 +18,7 @@ Wir wollen ein Aktien Portfolio erstellen mit einer einfachen Menü führung vor
 
 ### **Menüführung**
  
-
+TODO Grafik der konkreten Menüführung
 ## 2. Beschreibung des Funktionsablaufes
 
 
@@ -82,6 +82,8 @@ Bei deisem Menüpunkt kannst der Nutzer aus dem Portfolio auloggen, falls er mit
 Das eigentliche Programm läuft auf einen Server, die clients holen sich die daten von server. Die Aktien können nach bielieben hinzugefügt werden und haben kein maximum. Die Ersten beide Menüpunkte verfügen über ein Untern Menüpunkt. Ebendfalls besonders ist, dass man wieder in Main-Menü zurück kehren kann. Außerdem kann man nicht mehr Geld in die Aktien investieren, wenn das "Guthaben" bzw auch das Konto komplett leer sind. 
 
 
+TODO Diagramme fehlen
+
 #### **Diagramm (Aktivitätsdiagramm) Funktion Fach anlegen**
 
 ![your-UML-diagram-name](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/teach404W/agileProjekt_2_Java/main/Docs/Pflichtenheft/Diagramme/AnwendungsFall_Fach_anlegen.iuml)
@@ -107,4 +109,9 @@ TOFILL
 
 ### **Objektdiagramm**
 TOFILL
+
+TODO Objektdiagramm
+
+
+TODO Squenzdiagramm fehlt
 
