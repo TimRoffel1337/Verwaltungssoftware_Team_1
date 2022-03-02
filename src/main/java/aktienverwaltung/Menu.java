@@ -23,6 +23,10 @@ public class Menu {
     BufferedWriter bufferedWriter = null;
 
     public Menu() {
+        start();
+    }
+
+    public void start() {
         String ip;
         String dir = "C:/Users/" + System.getProperty("user.name") + "/Documents/Aktienverwaltung/";
         File ipPath = new File(dir);
