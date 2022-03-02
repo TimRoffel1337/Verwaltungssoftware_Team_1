@@ -1,0 +1,43 @@
+@startuml
+skinparam classAttributeIconSize 0
+class Stock {
+ +name : String
+ +values : int[]
+}
+
+class Account extends Person {
+ +username : String
+ +password : String
+}
+
+class Person {
+ -name : String
+ -birthdate : String
+ -email : String
+ -phonenumber : String
+ +setName() : void
+ +getName(String name) : String
+ +setBirthdate(String birthdate) : void
+ +getBirthdate() : String
+ +setEmail(String email) : void
+ +getEmail() : String
+ +setPhoneNumber(String phoneNumber) : void
+ +getPhoneNumber() : String
+}
+
+class Menu {
+ +gson : Gson
+ +socket : Socket
+ +inputStreamReader : InputStreamReader
+ +outputStreamWriter : OutputStreamWriter
+ +bufferedReader : BufferedReader
+ +bufferedWriter : BufferedWriter
+ +account : Account
+ -sendMessage(String[] msg) : void
+ -login(String[] msg) : boolean
+ -logout(String[] msg) : boolean
+ -register(String[] msg) : boolean
+ -buyStock(String[] msg) : boolean
+ -sellStock(String[] msg) : boolean
+}
+@enduml

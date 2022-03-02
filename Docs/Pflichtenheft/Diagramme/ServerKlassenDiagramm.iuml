@@ -1,0 +1,96 @@
+@startuml
+skinparam classAttributeIconSize 0
+class App() {
+ +dir : String
+ +accounts : File
+ +stocks : File
+ +server : Server
+}
+
+class Server() {
+ +gson : Gson
+ +dir : String
+ +serverSocket : ServerSocket
+ +socket : Socker
+ +rand : Random
+ +reader : BufferedReader
+ +writer : BufferedWriter
+ +files : Files[]
+ +stock : Stock
+ +sc : Scanner
+ +input : String[]
+ +stockName : String
+ +file : File
+ +contents : String
+
+ +generateStockValues() : Thread
+ +cmdInput() : Thread
+}
+
+class EchoThread() {
+ -socket : Socket
+ -user : User
+ -gson : Gson
+ +inputStream : InputStream
+ +bufferedReader : BufferedReader
+ +outputStream : OutputStreamWriter
+ +bufferedWriter : BufferedWriter
+ +line : String
+ +message : String[]
+ +username : String
+ +hashedPassword : String
+ +userFile : File
+ +reader : BufferedReader
+ +respone : String[]
+ +msg : String
+ +userName : String
+ +hashedPassword : String
+ +files : Files[]
+ +stocks : String[]
+ +stockName : String
+ +stock : String
+ +checker : boolean
+ +userFile : File
+ +run() : void
+ +userExists() : boolean
+ +getUserFile() : File
+}
+
+class Stock() {
+ -values : Integer[]
+ -name : String
+ +getName() : String
+ +getValues() : Integer[]
+ +setValues(Integer[] values) : void
+ +addValue(int length, Integer[] oldArray, int value) : void
+}
+
+class User extends Person {
+ -username : String
+ -password : String
+ -stocks : Stock[]
+ +setUsername() : void
+ +getUsername() : String
+ +setHashedPassword() : void
+ +getHashedPassword() : String
+ +getStocks() : Stocks[]
+ +setStocks(Stock[] stocks) : void
+ +addStock(int length, Stock[] oldArray, Stock stock) : void
+}
+
+
+class Person {
+ -name : String
+ -birthdate : String
+ -email : String
+ -phonenumber : String
+ +setName() : void
+ +getName(String name) : String
+ +setBirthdate(String birthdate) : void
+ +getBirthdate() : String
+ +setEmail(String email) : void
+ +getEmail() : String
+ +setPhoneNumber(String phoneNumber) : void
+ +getPhoneNumber() : String
+}
+@enduml
