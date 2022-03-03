@@ -76,8 +76,7 @@ Nach der Ameldung kann der Benutzer auch auf dem Menüpunkt Bilanz zugreifen. In
 
 ### **Abmelden**
 
-Bei deisem Menüpunkt kannst der Nutzer aus dem Portfolio auloggen, falls er mit allen seinen Vorhaben fertig ist. 
-
+Bei deisem Menüpunkt kannst der Nutzer aus dem Portfolio auloggen, falls er mit allen seinen Vorhaben fertig ist. Somit kommet man in den Anmelde Bildschirm geschickt. 
 **Besonderheiten**
 Das eigentliche Programm läuft auf einen Server, die clients holen sich die daten von server. Die Aktien können nach bielieben hinzugefügt werden und haben kein maximum. Die Ersten beide Menüpunkte verfügen über ein Untern Menüpunkt. Ebendfalls besonders ist, dass man wieder in Main-Menü zurück kehren kann. Außerdem kann man nicht mehr Geld in die Aktien investieren, wenn das "Guthaben" bzw auch das Konto komplett leer sind. 
 
