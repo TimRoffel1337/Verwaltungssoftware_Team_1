@@ -1,0 +1,27 @@
+@startuml
+object app1 {
+dir = C:/user/programmx86/portfolio/
+accounts = new File("C:/user/" + System.getProperty("user.name + "app1/portfolio/account")
+stocks = new Stock ("C:/user/programmx86/app1/portfolio/stocks")
+Server = new Server 
+}
+
+
+object microsoft { 
+values = 543$
+name = "microsoft" 
+}
+
+object ludwig {
+username = "Ludwig187"
+password = "1987password18769"
+stocks = 150
+}
+
+object kroeger {
+name = "KevinKröger"
+birthdate = "KeulenKroeger28454"
+email = "Kevin-KeulenKroeger@gmail.com" 
+phonenumber = +49 1223 43214384
+}  
+@enduml
