@@ -10,11 +10,6 @@ public class Stock {
         this.name = name;
     }
 
-    public Stock(String name, Integer[] values) {
-        this.name = name;
-        this.values = values;
-    }
-
     public String getName() {
         return name;
     }
