@@ -4,7 +4,7 @@ public class Stock {
     private Integer[] values;
     private String name;
 
-    public Stock(Integer[] values, String name) {
+    public Stock(String name, Integer[] values) {
         this.values = values;
         this.name = name;
     }
