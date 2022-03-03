@@ -4,6 +4,12 @@ public class Stock {
     private Integer[] values;
     private String name;
 
+    //Konstruktor
+    public Stock(Integer[] values, String name) {
+        this.values = values;
+        this.name = name;
+    }
+
     public Stock(String name, Integer[] values) {
         this.name = name;
         this.values = values;

@@ -5,40 +5,47 @@ public class Person {
     String email;
     String phonenumber;
 
-    
-    //name
-    public String getname() {
-        return name;
-      }
-    
-      public void setname(String name) {
+    //Konstruktor
+    public Person(String name, String birthdate, String email, String phonenumber) {
         this.name = name;
-      }
-
-      //birthdate
-      public String getbirthdate() {
-        return birthdate;
-      }
-    
-      public void setbirthdate(String birthdate) {
         this.birthdate = birthdate;
-      }
-
-      //email
-      public String getemail() {
-        return email;
-      }
-    
-      public void setemail(String email) {
         this.email = email;
-      }
-      
-      //phonenumber
-      public String getphonenumber() {
-        return phonenumber;
-      }
-    
-      public void setphonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
-      }
+    }
+
+    //name
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    //birthdate
+    public String getBirthdate() {
+        return birthdate;
+    }
+    
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    //email
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+      
+    //phonenumber
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+    
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
 }
