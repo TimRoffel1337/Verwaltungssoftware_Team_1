@@ -6,6 +6,7 @@ stocks = new Stock ("C:/user/programmx86/app1/portfolio/stocks")
 Server = new Server 
 }
 
+
 object microsoft { 
 values = 543$
 name = "microsoft" 
