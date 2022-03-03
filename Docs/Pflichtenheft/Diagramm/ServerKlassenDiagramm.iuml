@@ -11,7 +11,7 @@ class Server() {
  +gson : Gson
  +dir : String
  +serverSocket : ServerSocket
- +socket : Socker
+ +socket : Socket
  +rand : Random
  +reader : BufferedReader
  +writer : BufferedWriter
