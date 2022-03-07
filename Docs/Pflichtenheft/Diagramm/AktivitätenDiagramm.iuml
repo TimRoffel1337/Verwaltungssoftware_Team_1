@@ -1,0 +1,56 @@
+@startuml
+start
+:Anmelden;
+:Menü;
+:Menü: Finaze;
+:Ein und Auszahlen;
+:Frag: Wie viel Geld willst du abheben;
+:Eingabe bestätigen;
+:Aktion: Hebe eingegebenen Betrag ab;
+:Führe Nutzer zurück in den Menü Finazen;
+:Zurück; 
+:Abmelden;
+Stop 
+@enduml
+
+@startuml
+start;
+: Anmelden;
+: Menü;
+: Menü:Finanzen;
+: Kaufen und Verkaufen; 
+: Frag: Welche Aktien will du Kaufen/Verkaufen?;
+: Wähle: Aktie aus;
+: Frag: Wie Viele Aktien willst du Kaufen und Vewrkaufen?;
+: Wähl: Anzahl der Aktien aus;
+: Checke: Bei kauf ob das Aufgeladene Geld ausreich für kauf; 
+: Führe den Nutzer zurück zum Menü Finazen zurück;
+: Zurück;
+: Abmelden; 
+stop; 
+@enduml
+
+@startuml
+start;
+:Anmelden;
+:Menü;
+:Menü: Aktien; 
+:Kurse;
+:Zeige: Aktien Kurse;
+:Zurück:Ins Menü Aktien;
+:Zurück: Ins Menü; 
+:Abmelden;  
+stop 
+@enduml
+
+@startuml
+start
+:Anmelden;
+:Menü; 
+:Menü: Aktien;
+:Aktien Anteile;
+:Zeig: Aktien und deren Anteile; 
+:Zurück;
+:Abmelden;
+stop
+@enduml
