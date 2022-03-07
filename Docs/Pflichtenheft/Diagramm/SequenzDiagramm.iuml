@@ -1,0 +1,100 @@
+@startuml
+
+Person -> Anmelden :login()
+Anmelden --> Person : boolean true
+Person -> registrieren :registrieren()
+registrieren -> Person :string() 
+Person -> Anmelden  :login()
+Anmelden -> Menü 
+Menü -> MenüFinazen : input() 
+MenüFinazen -> EinuAus.Auszahlen :input ()  
+Konto --> EinuAus.Auszahlen : boolean false
+EinuAus.Auszahlen -> MenüFinazen 
+EinuAus.Auszahlen-> Konto : check()
+Konto --> EinuAus.Auszahlen : boolean true 
+Konto -> EinuAus.Auszahlen : String (Wie viel willst du abheben?)
+EinuAus.Auszahlen -> Konto : input()
+Konto -> Lequide.Mittel : int = Ein.AusZahlen ()
+Lequide.Mittel -> Konto : String Konto Geld(Konto -+ Ein.AusZahlen)
+Konto -> Person : String ("Neuer Konto Stand Beträgt " + Konto Geld "€")
+Lequide.Mittel -> Person : String ("Geld wurde Aufgeladen " + Lequide.Mittel "€")
+Lequide.Mittel -> MenüFinazen
+MenüFinazen -> Zurück :input (Enter)
+Zurück -> Menü
+Menü -> Abmelden : input(Enter)
+Abmelden -> Person :
+Person -> Gson:
+
+@enduml
+
+@startuml
+
+Person -> Anmelden :login()
+Anmelden --> Person : boolean true
+Person -> registrieren :registrieren()
+registrieren -> Person :string() 
+Person -> Anmelden  :login()
+Anmelden -> Menü 
+Menü -> MenüFinanzen : input() 
+MenüFinazen -> KaufuVerkaufen :input()
+KaufuVerkaufen -> AktienMarkt 
+AktienMarkt -> Person : string (Welche Aktie Willst du Kaufen.Verkaufen ?)
+Person -> AktienMarkt : input() 
+AktienMarkt -> Person : string (Wie Viele Aktien willst du Kaufen.Verkaufen)  
+AktienMarkt-> Lequide.Mittel: scan()
+Lequide.Mittel --> AktienMarkt: boolean Fals
+Lequide.Mittel -> Person : string (Das Aufgeladene Geld reicht nicht aus)
+Lequide.Mittel --> AktienMarkt: boolean true
+Lequide.Mittel -> AktienMarkt: kauf()
+AktienMarkt -> Lequide.Mittel: Value (Lequide.Miitel - value stock * Anzahl stock)
+AktienMarkt -> Portfolio : transfer()
+Lequide.Mittel -> Person : string (Value)
+Portfolio -> Person : string (Anzahl Stock, Value Stock) 
+AktienMarkt -> Zurück: input()
+Zurück -> MenüFinanzen
+MenüFinanzen -> Zurück : input()
+Zurück -> Menü 
+Menü -> Abmelden : input()
+Abmelden -> Person
+
+@enduml
+
+@startuml
+
+Person -> Anmelden :login()
+Anmelden --> Person : boolean true
+Person -> registrieren :registrieren()
+registrieren -> Person :string() 
+Person -> Anmelden  :login()
+Anmelden -> Menü 
+Menü -> MenüAktien: input()
+MenüAktien -> Kurse: input()
+Kurse -> AktienMarket : show()
+AktienMarket -> Zurück: input()
+Zurück -> MenüAktien:
+MenüAktien -> Zurück: input()
+Zurück -> Menü
+Menü -> Abmelden: input()
+Abmelden -> Person  
+
+@enduml
+
+@startuml
+
+Person -> Anmelden :login()
+Anmelden --> Person : boolean true
+Person -> registrieren :registrieren()
+registrieren -> Person :string() 
+Person -> Anmelden  :login()
+Anmelden -> Menü 
+Menü -> MenüAktien: input()
+MenüAktien -> Portfolio: input()
+Portfolio -> Aktien : show()
+Aktien -> Zurück: input()
+Zurück -> MenüAktien: 
+MenüAktien -> Zurück: input()
+Zurück -> Menü: 
+Menü -> Abmelden : input()
+Abmelden -> Person 
+
+@enduml
