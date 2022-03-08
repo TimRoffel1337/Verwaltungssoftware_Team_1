@@ -12,6 +12,55 @@ values = 543$
 name = "microsoft" 
 }
 
+@startuml
+object Server2{
+gson: new Gson()
+dir : "C:/user/programmx86/portfolio/Server2"
+serverSocket: new ServerSocket()
+socket: Socket1
+rand: 152
+reader : BufferedReader1
+writer : BufferedWriter2
+files : Files["SpackoBlack88"]
+stock : 657 
+sc: Scanner1
+input : String[Enter]
+stockName : Microsoft
+file: File2 
+contents: "C:/user/programmx86/portfolio/Server2"
+}
+@enduml
+
+@startuml
+
+object EchoThread1 {
+
+ socket : new Socket()
+ user : Kevin Krögsman
+ gson : new Gson()
+ inputStream : InputStream1()
+ bufferedReader : BufferedReader1
+ outputStream : OutputStreamWriter2
+ bufferedWriter : BufferedWriter3
+ line : String (Line 69)
+ message : String[Du bist der user KevinKörger]
+ username : KevinKröger69
+ hashedPassword : 0ß1275098203ß495jökwkrflöjkdflökjölakjsdf8s982985
+ userFile : C:/user/programmx86/portfolio/Kevin Krögsman
+ reader : BufferedReader5
+ respone : String[Das ist Kevin]
+ msg : Hallo 
+ userName : KevinKrögsman
+ hashedPassword : 92u93iur0oölkajdslöfj0239eu4knmlkgnpdjb0e003
+ files : Files[C:/user/programmx86/portfolio/Users]
+ stocks : String[867 Stocks]
+ stockName : Blizzard 
+ stock : Blizzad 
+ checker : True
+ userFile : File4
+}
+@enduml
+
 object ludwig {
 username = "Ludwig187"
 password = "1987password18769"
@@ -20,7 +69,7 @@ stocks = 150
 
 object kroeger {
 name = "KevinKröger"
-birthdate = "KeulenKroeger28454"
+birthdate = "7.09.2005"
 email = "Kevin-KeulenKroeger@gmail.com" 
 phonenumber = +49 1223 43214384
 }  
