@@ -10,8 +10,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Scanner;
-
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import com.google.gson.Gson;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Menu {
     Gson gson;
@@ -66,6 +70,9 @@ public class Menu {
 
                     System.out.println(bufferedReader.readLine());
                 }
+                else if (in[0].equalsIgnoreCase("register")) {
+                    register(scanner);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,6 +92,80 @@ public class Menu {
             }
         }
     }
+
+    public void register(Scanner scanner) {
+        String userName;
+        String password;
+        String birth;
+        String email;
+        String phonenumber;
+
+        System.out.println("Legen Sie ihren Benutzernamen fest:");
+        userName = scanner.nextLine();
+        
+        System.out.println("Legen Sie ihr Passwort fest:");
+        password = hash(scanner.nextLine());
+        System.out.println(password);
+
+        birth = birthdate();
+
+        System.out.println("Geben sie ihre e-mail an:");
+        email = scanner.nextLine();
+
+        System.out.println("Geben sie ihre Telefonnummer an:");
+        phonenumber = scanner.nextLine();
+        
+        //senden
+        String[] msg = { userName, password, birth, email, phonenumber };
+        sendMessage(msg);
+    }
+    
+    //generiert ein Passwort nach dd.MM.yyyy Format
+    private String birthdate(){
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        
+        format.setLenient(false);
+
+        while(true){
+            try {
+                String tempdate;
+                Scanner sc = new Scanner(System.in);
+
+                System.out.println("Geben sie ihr Geburtsdatum an");
+                tempdate = sc.nextLine(); 
+                format.parse(tempdate);
+                //wenn die Eingabe keinene Fehler hervorruft, geht der Code weiter
+                sc.close();
+                return tempdate;
+            } catch (ParseException e) {
+                System.out.println("Eingabe ist ungültig. Bittet im " + format.toPattern() + " Format" );
+                continue;
+            }
+        }    
+    }
+
+    //nimmt einen String und gibt ihn gehashet zurück
+    private String hash(String quelle){
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA3-256");
+
+            byte[]hashInBytes = md.digest(quelle.getBytes(StandardCharsets.UTF_8));
+
+            for (byte b : hashInBytes) {
+                sb.append(String.format("%02x", b));
+            }
+
+            
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        
+        return sb.toString();
+    }
+    
+    
 
     private void sendMessage(String[] msg) {
         try {
