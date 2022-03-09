@@ -144,7 +144,7 @@ public class Menu {
         }    
     }
 
-    //nimmt einen String und gibt ihn als hash zurück
+    //nimmt einen String und gibt ihn gehash zurück
     private String hash(String quelle){
         StringBuilder sb = new StringBuilder();
 
