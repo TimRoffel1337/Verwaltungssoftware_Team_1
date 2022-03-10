@@ -104,12 +104,12 @@ public class Menu {
         userName = scanner.nextLine();
         
         System.out.println("Legen Sie ihr Passwort fest:");
-        password = hash(scanner.nextLine());
+        password = hashPassword(scanner.nextLine());
         System.out.println(password);
 
-        birth = birthdate();
+        birth = birthdate(scanner);
 
-        System.out.println("Geben sie ihre e-mail an:");
+        System.out.println("Geben sie ihre E-Mail an:");
         email = scanner.nextLine();
 
         System.out.println("Geben sie ihre Telefonnummer an:");
@@ -121,7 +121,7 @@ public class Menu {
     }
     
     //generiert ein Passwort nach dd.MM.yyyy Format
-    private String birthdate(){
+    private String birthdate(Scanner sc){
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         
         format.setLenient(false);
@@ -129,13 +129,11 @@ public class Menu {
         while(true){
             try {
                 String tempdate;
-                Scanner sc = new Scanner(System.in);
-
                 System.out.println("Geben sie ihr Geburtsdatum an");
                 tempdate = sc.nextLine(); 
                 format.parse(tempdate);
                 //wenn die Eingabe keinene Fehler hervorruft, geht der Code weiter
-                sc.close();
+
                 return tempdate;
             } catch (ParseException e) {
                 System.out.println("Eingabe ist ungültig. Bittet im " + format.toPattern() + " Format" );
@@ -144,28 +142,23 @@ public class Menu {
         }    
     }
 
-    //nimmt einen String und gibt ihn gehashet zurück
-    private String hash(String quelle){
+    //nimmt einen String und gibt ihn als hash zurück
+    private String hashPassword(String password){
         StringBuilder sb = new StringBuilder();
 
         try {
             MessageDigest md = MessageDigest.getInstance("SHA3-256");
-
-            byte[]hashInBytes = md.digest(quelle.getBytes(StandardCharsets.UTF_8));
+            byte[]hashInBytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
 
             for (byte b : hashInBytes) {
                 sb.append(String.format("%02x", b));
             }
-
-            
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         
         return sb.toString();
     }
-    
-    
 
     private void sendMessage(String[] msg) {
         try {
