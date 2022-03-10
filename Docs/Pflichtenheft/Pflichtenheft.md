@@ -84,27 +84,23 @@ Das eigentliche Programm läuft auf einen Server, die clients holen sich die dat
 
 #### **Diagramm (Aktivitätsdiagramm) Funktion Fach anlegen**
 
-![your-UML-diagram-name](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/teach404W/agileProjekt_2_Java/main/Docs/Pflichtenheft/Diagramme/AnwendungsFall_Fach_anlegen.iuml)
+![Aktivitäten(alle)](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/Aktivit%C3%A4tenDiagramm.iuml)
 
-### **Note anlegen()**
-TOFILL
+### **KlassendiagrammClient**
 
-#### **Beschreibung METHODE**
-TOFILL
+![Clint-Klass](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/ClientKlassenDiagramm.iuml)
 
-#### **Diagramm METHODE**
-TOFILL
+### **Klassendiagramm Server**
 
+![Server-Klass](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/ServerKlassenDiagramm.iuml)
 
+### **ObjektdiagrammClient**
 
-## 3. Diagramm Dokumentation
+![Client-Objekt](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/ClientObjektDiagramm.iuml)
 
+### **ObjektdiagrammServer** 
 
-### **Klassendiagramm**
+![Server-Obejekt](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/ServerObjektDiagramm.iuml)
 
-![your-UML-diagram-name](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/teach404W/agileProjekt_2_Java/main/Docs/Pflichtenheft/Diagramme/Klassendiagramm.iuml)
-
-
-### **Objektdiagramm**
-TOFILL
-
+### **SeqzernzDiagramm**
+![SequenzDiagramm](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/SequenzDiagramm.iuml)
