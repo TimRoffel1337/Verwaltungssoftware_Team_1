@@ -103,4 +103,4 @@ Das eigentliche Programm läuft auf einen Server, die clients holen sich die dat
 ![Server-Obejekt](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/ServerObjektDiagramm.iuml)
 
 ### **SeqzernzDiagramm**
-![SequenzDiagramm](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/SequenzDiagramm.iuml)
+![SequenzDiagramm](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/SequenzDiagramm.iuml) 
