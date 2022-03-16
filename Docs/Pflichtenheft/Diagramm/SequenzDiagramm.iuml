@@ -61,12 +61,10 @@ Abmelden -> Person
 
 @startuml
 
-Person -> Anmelden :login()
-Anmelden --> Person : boolean true
-Person -> registrieren :registrieren()
-registrieren -> Person :string() 
-Person -> Anmelden  :login()
-Anmelden -> Menü 
+Menü -> Person : login()
+Person --> Menü : boolean true
+Menü -> Person : registrieren()
+Person --> Menü : boolean
 Menü -> MenüAktien: input()
 MenüAktien -> Kurse: input()
 Kurse -> AktienMarket : show()
