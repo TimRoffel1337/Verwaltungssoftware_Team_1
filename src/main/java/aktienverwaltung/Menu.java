@@ -1,5 +1,8 @@
 package aktienverwaltung;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,10 +14,20 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class Menu {
     Gson gson;
+
+    JFrame frame = new JFrame();
+    JPanel panel = new JPanel();
 
     Socket socket = null;
     InputStreamReader inputStreamReader = null;
@@ -22,18 +35,123 @@ public class Menu {
     BufferedReader bufferedReader = null;
     BufferedWriter bufferedWriter = null;
 
+    Account[] accounts;
+
     public Menu() {
-        start();
+        gson = new Gson();
+
+        gui();
+        //start();
+    }
+
+    public void gui() {
+        JLabel ipLabel = new JLabel("Server IP:");
+        ipLabel.setLocation(0, 0);
+        panel.add(ipLabel);
+
+        JTextField ipField = new JTextField(10);
+        ipField.setLocation(20, 50);
+        panel.add(ipField);
+
+        JLabel portLabel = new JLabel("Port:");
+        portLabel.setLocation(0, 100);
+        panel.add(portLabel);
+
+        JTextField portField = new JTextField(4);
+        portField.setLocation(50, 100);
+        panel.add(portField);
+
+        JButton weiter = new JButton("Weiter");
+        weiter.setBounds(50,100,95,30);
+        weiter.setBackground(Color.WHITE);
+        panel.add(weiter);
+
+        weiter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String ip = ipField.getText();
+                short port = Short.valueOf(portField.getText());
+
+                JLabel errorMsg = new JLabel("Es konnte keine Verbindung mit dem Server aufgebaut werden");
+                errorMsg.setForeground(Color.RED);
+                errorMsg.setLocation(200, 200);
+
+                if (connectToServer(ip, port)) {
+                    panel.remove(portField);
+                    panel.remove(ipField);
+                    panel.remove(weiter);
+                    panel.remove(ipLabel);
+                    panel.remove(portLabel);
+
+                    if (panel.isAncestorOf(errorMsg)) {
+                        panel.remove(errorMsg);
+                    }
+
+                    panel.updateUI();
+                    startMenu();
+                }
+                else {
+                    panel.updateUI();
+                }
+            }
+        });
+
+        frame.setSize(960, 540);
+        frame.setTitle("Aktienverwaltungs Programm");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+
+    private void startMenu() {
+        System.out.println("Gettings all user");
+
+        String[] serverMsg = { "getusers" };
+        sendMessage(serverMsg);
+
+        try {
+            accounts = gson.fromJson(bufferedReader.readLine(), Account[].class);
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Successfully got all user");
+
+        JButton login = new JButton("Anmelden");
+        login.setBackground(Color.WHITE);
+
+        JButton register = new JButton("Registrieren");
+        register.setBackground(Color.WHITE);
+
+        login.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+
+        panel.add(login);
+        panel.add(register);
+
+        panel.updateUI();
+    }
+
+    private void loginMenu() {
+
     }
 
     public void start() {
         String ip;
+        short port = 443;
         String dir = "C:/Users/" + System.getProperty("user.name") + "/Documents/Aktienverwaltung/";
         File ipPath = new File(dir);
         File ipFile = new File(dir + "ip.json");
 
         try {
-            gson = new Gson();
             Scanner scanner = new Scanner(System.in);
 
             if (!ipFile.exists()) {
@@ -51,12 +169,7 @@ public class Menu {
                 ip = gson.fromJson(bufferedReader.readLine(), String.class);
             }
 
-            socket = new Socket(ip, 1234);
-            inputStreamReader = new InputStreamReader(socket.getInputStream());
-            outPutStreamWriter = new OutputStreamWriter(socket.getOutputStream());
-
-            bufferedReader = new BufferedReader(inputStreamReader);
-            bufferedWriter = new BufferedWriter(outPutStreamWriter);
+            connectToServer(ip, port);
 
             while(true) {
                 String[] in = scanner.nextLine().split(" ");
@@ -84,6 +197,23 @@ public class Menu {
                 e.printStackTrace();
             }
         }
+    }
+
+    private boolean connectToServer(String ip, short port) {
+        try {
+            socket = new Socket(ip, port);
+            inputStreamReader = new InputStreamReader(socket.getInputStream());
+            outPutStreamWriter = new OutputStreamWriter(socket.getOutputStream());
+    
+            bufferedReader = new BufferedReader(inputStreamReader);
+            bufferedWriter = new BufferedWriter(outPutStreamWriter);
+
+            return true;
+        } catch(IOException e) {
+            System.out.println("Failed to connect to the Server!");
+        }
+
+        return false;
     }
 
     private void sendMessage(String[] msg) {
