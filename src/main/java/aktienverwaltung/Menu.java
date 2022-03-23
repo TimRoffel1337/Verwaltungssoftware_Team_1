@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,7 +13,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Scanner;
-<<<<<<< HEAD
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,16 +23,14 @@ import javax.swing.JTextField;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-=======
+
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
-import com.google.gson.Gson;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
->>>>>>> origin/jonas_private
 
 public class Menu {
     Gson gson;
