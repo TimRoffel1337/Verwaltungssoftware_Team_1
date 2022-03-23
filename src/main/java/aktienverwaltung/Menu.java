@@ -27,6 +27,7 @@ import com.google.gson.JsonSyntaxException;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.NotLinkException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
@@ -222,7 +223,7 @@ public class Menu {
                 String password = passwdInput.getText();
                 String passwordRepeat = passwdRepeatInput.getText();
 
-                if (password.equals(passwordRepeat) && emailStr.contains("@")) {
+                if (password.equals(passwordRepeat) && isEmailValid(emailStr)) {
                     panel.remove(email);
                     panel.remove(passwd);
                     panel.remove(passwdRepeat);
@@ -258,6 +259,32 @@ public class Menu {
         JTextField birtdateInput = new JTextField(10);
         JTextField phonenumberInput = new JTextField(10);
 
+        JButton weiter = new JButton("Weiter");
+        weiter.setBackground(Color.WHITE);
+
+        weiter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fNameStr = fNameInput.getText();
+                String lNameStr = lNameInput.getText();
+                String birthdateStr = birtdateInput.getText();
+                String phonenumberStr = phonenumberInput.getText();
+
+                if (fNameStr != null && lNameStr != null && birthdateStr != null && phonenumberStr != null) {
+                    
+
+                    panel.remove(firstName);
+                    panel.remove(lastName);
+                    panel.remove(birtdate);
+                    panel.remove(phonenumber);
+                    panel.remove(fNameInput);
+                    panel.remove(lNameInput);
+                    panel.remove(birtdateInput);
+                    panel.remove(phonenumberInput);
+                    panel.remove(weiter);
+                }
+            }
+        });
 
         panel.add(firstName);
         panel.add(fNameInput);
@@ -267,6 +294,7 @@ public class Menu {
         panel.add(birtdateInput);
         panel.add(phonenumber);
         panel.add(phonenumberInput);
+        panel.add(weiter);
 
         panel.updateUI();
     }
@@ -390,7 +418,7 @@ public class Menu {
     }
 
     public void register(Scanner scanner) {
-        bufferedReader = new BufferedReader(inputStreamReader);
+        /*bufferedReader = new BufferedReader(inputStreamReader);
         String userName = "";
         String password;
         String birth;
@@ -436,29 +464,23 @@ public class Menu {
         
         //senden
         String[] msg = { userName, password, birth, phonenumber };
-        sendMessage(msg);
+        sendMessage(msg);*/
     }
     
     //Überprüft auf dd.MM.yyyy Format
-    private String birthdate(Scanner sc){
+    private boolean isValidVirthdate(String birtdate){
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         
         format.setLenient(false);
 
-        while(true){
-            try {
-                String tempdate;
-                System.out.println("Geben sie ihr Geburtsdatum an");
-                tempdate = sc.nextLine(); 
-                format.parse(tempdate);
-                //wenn die Eingabe keinene Fehler hervorruft, geht der Code weiter
+        try {
+            format.parse(birtdate);
+            //wenn die Eingabe keinene Fehler hervorruft, geht der Code weiter
 
-                return tempdate;
-            } catch (ParseException e) {
-                System.out.println("Eingabe ist ungültig. Bittet im " + format.toPattern() + " Format" );
-                continue;
-            }
-        }    
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 
     //nimmt einen String und gibt ihn als hash zurück
@@ -480,28 +502,21 @@ public class Menu {
     }
 
     //email regex
-    private String isemailvalid(Scanner sc) {
+    private boolean isEmailValid(String email) {
         String tempmail;
         String regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
         boolean matchFound = false;
 
-        while (true) {
-            tempmail = sc.next();
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(tempmail);
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
 
-            matchFound = matcher.find();
+        matchFound = matcher.find();
 
-            if (matchFound == true) {
-                System.out.println("Match found");
-                break;
-            } else {
-                System.out.println("Das ist keine gültige email Adresse");
-                continue;
-            }
-
+        if (matchFound == true) {
+            return true;
+        } else {
+            return false;
         }
-        return tempmail;
     }
 
     private void sendMessage(String[] msg) {
