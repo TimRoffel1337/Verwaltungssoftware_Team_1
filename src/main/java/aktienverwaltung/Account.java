@@ -1,31 +1,20 @@
 package aktienverwaltung;
 
 public class Account extends Person {
-    String username;
-    String password;
+    private String hashedPassword;
 
     //Konstruktor
-    public Account(String name, String birthdate, String email, String phonenumber, String username, String password) {
-        super(name, birthdate, email, phonenumber);
-        this.username = username;
-        this.password = password;
-    }
-
-    //username
-    public String getUsername() {
-        return username;
-    }
-    
-    public void setUsername(String username) {
-        this.username = username;
+    public Account(String firstName, String lastName, String email, String hashedPassword, String birthdate, String phonenumber) {
+        super(firstName, lastName, email, birthdate, phonenumber);
+        this.hashedPassword = hashedPassword;
     }
 
     //password
-    public String getPassword() {
-        return password;
+    public String getHashedPassword() {
+        return hashedPassword;
     }
     
-    public void setPassword(String password) {
-        this.password = password;
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
     }
 }
