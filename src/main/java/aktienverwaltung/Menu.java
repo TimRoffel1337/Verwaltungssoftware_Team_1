@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Menu {
     Gson gson;
@@ -25,6 +27,8 @@ public class Menu {
     OutputStreamWriter outPutStreamWriter = null;
     BufferedReader bufferedReader = null;
     BufferedWriter bufferedWriter = null;
+
+    Account[] accounts;
 
     public Menu() {
         start();
@@ -55,12 +59,14 @@ public class Menu {
                 ip = gson.fromJson(bufferedReader.readLine(), String.class);
             }
 
-            socket = new Socket(ip, 1234);
+            socket = new Socket(ip, 443);
             inputStreamReader = new InputStreamReader(socket.getInputStream());
             outPutStreamWriter = new OutputStreamWriter(socket.getOutputStream());
 
             bufferedReader = new BufferedReader(inputStreamReader);
             bufferedWriter = new BufferedWriter(outPutStreamWriter);
+
+            getAllUser();
 
             while(true) {
                 String[] in = scanner.nextLine().split(" ");
@@ -93,34 +99,72 @@ public class Menu {
         }
     }
 
+    Person[] getAllUser() {
+        String[] msg = { "getusers" };
+        sendMessage(msg);
+
+        String usersString;
+        try {
+            usersString = bufferedReader.readLine();
+            accounts = gson.fromJson(usersString, Account[].class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public void register(Scanner scanner) {
-        String userName;
+        bufferedReader = new BufferedReader(inputStreamReader);
+        String userName = "";
         String password;
         String birth;
-        String email;
         String phonenumber;
 
-        System.out.println("Legen Sie ihren Benutzernamen fest:");
-        userName = scanner.nextLine();
-        
-        System.out.println("Legen Sie ihr Passwort fest:");
-        password = hashPassword(scanner.nextLine());
-        System.out.println(password);
+        //Email
+        boolean hasChoosen = false;
+        while (hasChoosen == false) {
+            userName = isemailvalid(scanner);
+            boolean isAvailable = true;
 
+            for (Account account : accounts) {
+                if (account.getUsername().equals(userName)) {
+                    isAvailable = false;
+                    break;
+                }
+            }
+            if (isAvailable == true) {
+                hasChoosen = true;
+                break;
+            }
+            else if (isAvailable == false) {
+                System.out.println("Benutzername bereits vergeben. Bitte gebe einen neuen ein:");
+            }
+        }
+
+        //passwort
+        System.out.println("Legen Sie ihr Passwort fest (mindestens 8 Zeichen lang):");
+        String temppassword;
+        temppassword = scanner.next();
+        while (temppassword.length() < 8) {
+            System.out.println("Das Passwort muss mindestens 8 Zeichen lang sein");
+            temppassword = scanner.next();
+        }
+        password = hashPassword(temppassword);
+
+        //Geburtsdatum
         birth = birthdate(scanner);
 
-        System.out.println("Geben sie ihre E-Mail an:");
-        email = scanner.nextLine();
-
+        //Telefonnummer
         System.out.println("Geben sie ihre Telefonnummer an:");
         phonenumber = scanner.nextLine();
         
         //senden
-        String[] msg = { userName, password, birth, email, phonenumber };
+        String[] msg = { userName, password, birth, phonenumber };
         sendMessage(msg);
     }
     
-    //generiert ein Passwort nach dd.MM.yyyy Format
+    //Überprüft auf dd.MM.yyyy Format
     private String birthdate(Scanner sc){
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         
@@ -159,6 +203,32 @@ public class Menu {
         
         return sb.toString();
     }
+
+    //email regex
+    private String isemailvalid(Scanner sc) {
+        String tempmail;
+        String regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
+        boolean matchFound = false;
+
+        while (true) {
+            tempmail = sc.next();
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(tempmail);
+
+            matchFound = matcher.find();
+
+            if (matchFound == true) {
+                System.out.println("Match found");
+                break;
+            } else {
+                System.out.println("Das ist keine gültige email Adresse");
+                continue;
+            }
+
+        }
+        return tempmail;
+    }
+
 
     private void sendMessage(String[] msg) {
         try {
