@@ -40,7 +40,7 @@ public class Person {
         this.email = email;
     }
       
-    //phonenumberr
+    //phonenumber
     public String getPhonenumber() {
         return phonenumber;
     }
