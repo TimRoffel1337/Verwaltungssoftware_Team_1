@@ -361,7 +361,6 @@ public class Menu {
         }
     }
 
-<<<<<<< HEAD
     private boolean connectToServer(String ip, short port) {
         try {
             socket = new Socket(ip, port);
@@ -379,7 +378,6 @@ public class Menu {
         return false;
     }
 
-=======
     Person[] getAllUser() {
         String[] msg = { "getusers" };
         sendMessage(msg);
@@ -509,7 +507,7 @@ public class Menu {
         }
         return tempmail;
     }
-    
+
     private void sendMessage(String[] msg) {
         try {
             bufferedWriter.write(gson.toJson(msg));
