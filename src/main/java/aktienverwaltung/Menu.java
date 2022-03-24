@@ -48,6 +48,9 @@ public class Menu {
 
     Color bgColor = Color.WHITE;
     Color textColor = Color.BLACK;
+    Color fieldColor = Color.WHITE;
+    Color buttonColor = Color.WHITE;
+
     boolean isDarkmode = false;
 
     Account[] accounts;
@@ -61,7 +64,6 @@ public class Menu {
 
         panel.setLayout(null);
 
-
         //ENTFERNEN
         frame.setSize(960, 540);
         frame.setTitle("Aktienverwaltungs Programm");
@@ -70,6 +72,7 @@ public class Menu {
         frame.add(panel);
         frame.setVisible(true);
 
+        //registerMenu();
         //menuGui();
         gui();
         //start();
@@ -88,6 +91,7 @@ public class Menu {
     
             JTextField ipField = new JTextField(10);
             ipField.setBounds(450, 150, 100, 20);
+            ipField.setBackground(fieldColor);
             panel.add(ipField);
     
             JLabel portLabel = new JLabel("Port:");
@@ -97,11 +101,12 @@ public class Menu {
     
             JTextField portField = new JTextField(4);
             portField.setBounds(450, 170, 50, 20);
+            portField.setBackground(fieldColor);
             panel.add(portField);
     
             JButton weiter = new JButton("Weiter");
             weiter.setBounds(430, 225, 95, 25);
-            weiter.setBackground(Color.WHITE);
+            weiter.setBackground(buttonColor);
             panel.add(weiter);
 
             panel.updateUI();
@@ -192,15 +197,15 @@ public class Menu {
 
     private void startMenu() {
         JButton login = new JButton("Anmelden");
-        login.setBackground(Color.WHITE);
+        login.setBackground(buttonColor);
         login.setBounds(420, 150, 125, 25);
 
         JButton register = new JButton("Registrieren");
-        register.setBackground(Color.WHITE);
+        register.setBackground(buttonColor);
         register.setBounds(420, 190, 125, 25);
 
         JButton settings = new JButton("Einstellungen");
-        settings.setBackground(Color.WHITE);
+        settings.setBackground(buttonColor);
         settings.setBounds(25, 450, 125, 25);
 
         register.addActionListener(new ActionListener() {
@@ -249,6 +254,7 @@ public class Menu {
 
         JTextField ipField = new JTextField(10);
         ipField.setBounds(450, 150, 100, 20);
+        ipField.setBackground(fieldColor);
         ipField.setText(ip);
         panel.add(ipField);
 
@@ -260,6 +266,7 @@ public class Menu {
         JTextField portField = new JTextField(4);
         portField.setBounds(450, 170, 50, 20);
         portField.setText(String.valueOf(port));
+        portField.setBackground(fieldColor);
         panel.add(portField);
 
         JLabel darkMode = new JLabel("Dark Mode:");
@@ -269,6 +276,7 @@ public class Menu {
         JCheckBox darkModeBox = new JCheckBox();
         darkModeBox.setForeground(Color.WHITE);
         darkModeBox.setBounds(450, 190, 20, 20);
+        darkModeBox.setSelected(isDarkmode);
 
         JButton save = new JButton("Speichern");
         save.setBounds(420, 220, 100, 20);
@@ -287,26 +295,50 @@ public class Menu {
 
                 if (darkModeBox.isSelected()) {
                     bgColor = Color.DARK_GRAY;
+                    buttonColor = Color.lightGray;
                     textColor = Color.WHITE;
+                    fieldColor = Color.lightGray;
 
                     panel.setBackground(Color.DARK_GRAY);
                     isDarkmode = true;
+
+                    for (Component com : panel.getComponents()) {
+                        panel.remove(com);
+                    }
+
+                    if (account != null) {
+                        account.setDarkmode(true);
+                        panel.updateUI();
+                        menuGui();
+                    }
+                    else {
+                        panel.updateUI();
+                        startMenu();
+                    }
                 }
                 else {
                     bgColor = Color.WHITE;
                     textColor = Color.BLACK;
+                    buttonColor = Color.WHITE;
+                    fieldColor = Color.WHITE;
 
                     panel.setBackground(Color.WHITE);
                     isDarkmode = false;
+
+                    for (Component com : panel.getComponents()) {
+                        panel.remove(com);
+                    }
+
+                    if (account != null) {
+                        account.setDarkmode(false);
+                        panel.updateUI();
+                        menuGui();
+                    }
+                    else {
+                        panel.updateUI();
+                        startMenu();
+                    }
                 }
-
-                for (Component com : panel.getComponents()) {
-                    panel.remove(com);
-                }
-
-                panel.updateUI();
-
-                startMenu();
             }
         });
 
@@ -342,8 +374,16 @@ public class Menu {
         passwdInput.setBounds(450, 175, 150, 25);
         passwdRepeatInput.setBounds(450, 200, 150, 25);
 
+        emailInput.setBackground(fieldColor);
+        passwdInput.setBackground(fieldColor);
+        passwdRepeatInput.setBackground(fieldColor);
+
         JButton weiter = new JButton("Weiter");
-        weiter.setBackground(Color.WHITE);
+        weiter.setBackground(buttonColor);
+
+        JButton back = new JButton("Zurück");
+        back.setBackground(buttonColor);
+        back.setBounds(800, 450, 100, 25);
 
         weiter.setBounds(400, 250, 100, 25);
         weiter.addActionListener(new ActionListener() {
@@ -361,9 +401,21 @@ public class Menu {
                     panel.remove(passwdInput);
                     panel.remove(passwdRepeatInput);
                     panel.remove(weiter);
+                    panel.remove(back);
 
                     register2(emailStr, password);
                 }
+            }
+        });
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Component com : panel.getComponents()) {
+                    panel.remove(com);
+                }
+
+                startMenu();
             }
         });
 
@@ -374,6 +426,7 @@ public class Menu {
         panel.add(passwdRepeat);
         panel.add(passwdRepeatInput);
         panel.add(weiter);
+        panel.add(back);
 
         panel.updateUI();
     }
@@ -404,9 +457,18 @@ public class Menu {
         birthdateInput.setBounds(450, 160, 120, 25);
         phonenumberInput.setBounds(450, 190, 120, 25);
 
+        fNameInput.setBackground(fieldColor);
+        lNameInput.setBackground(fieldColor);
+        birthdateInput.setBackground(fieldColor);
+        phonenumberInput.setBackground(fieldColor);
+
         JButton weiter = new JButton("Weiter");
-        weiter.setBackground(Color.WHITE);
+        weiter.setBackground(buttonColor);
         weiter.setBounds(400, 230, 100, 25);
+
+        JButton back = new JButton("Zurück");
+        back.setBackground(buttonColor);
+        back.setBounds(800, 450, 100, 25);
 
         weiter.addActionListener(new ActionListener() {
             @Override
@@ -426,6 +488,7 @@ public class Menu {
                     panel.remove(birthdateInput);
                     panel.remove(phonenumberInput);
                     panel.remove(weiter);
+                    panel.remove(back);
 
                     Account newAccount = new Account(fNameStr, lNameStr, email, hashPassword(passwd), birthdateStr, phonenumberStr);
                     String[] msg = { "adduser", gson.toJson(newAccount) };
@@ -443,6 +506,17 @@ public class Menu {
             }
         });
 
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Component com : panel.getComponents()) {
+                    panel.remove(com);
+                }
+
+                startMenu();
+            }
+        });
+
         panel.add(firstName);
         panel.add(fNameInput);
         panel.add(lastName);
@@ -452,6 +526,7 @@ public class Menu {
         panel.add(phonenumber);
         panel.add(phonenumberInput);
         panel.add(weiter);
+        panel.add(back);
 
         panel.updateUI();
     }
@@ -472,9 +547,16 @@ public class Menu {
         emailInput.setBounds(475, 150, 150, 25);
         passwdInput.setBounds(475, 180, 150, 25);
 
+        emailInput.setBackground(fieldColor);
+        passwdInput.setBackground(fieldColor);
+
         JButton weiter = new JButton("Weiter");
-        weiter.setBackground(Color.WHITE);
+        weiter.setBackground(buttonColor);
         weiter.setBounds(425, 220, 100, 25);
+
+        JButton back = new JButton("Zurück");
+        back.setBackground(buttonColor);
+        back.setBounds(800, 450, 100, 25);
 
         weiter.addActionListener(new ActionListener() {
             @Override
@@ -486,12 +568,43 @@ public class Menu {
                         panel.remove(passwd);
                         panel.remove(passwdInput);
                         panel.remove(weiter);
+                        panel.remove(back);
 
                         account = acc;
+                        isDarkmode = account.getDarkmode();
 
+                        if (isDarkmode == true) {
+                            bgColor = Color.DARK_GRAY;
+                            buttonColor = Color.lightGray;
+                            textColor = Color.WHITE;
+                            fieldColor = Color.lightGray;
+        
+                            panel.setBackground(Color.DARK_GRAY);
+                        }
+                        else {
+                            bgColor = Color.WHITE;
+                            textColor = Color.BLACK;
+                            buttonColor = Color.WHITE;
+                            fieldColor = Color.WHITE;
+        
+                            panel.setBackground(Color.WHITE);
+                        }
+
+                        panel.updateUI();
                         menuGui();
                     }
                 }
+            }
+        });
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Component com : panel.getComponents()) {
+                    panel.remove(com);
+                }
+
+                startMenu();
             }
         });
 
@@ -500,27 +613,49 @@ public class Menu {
         panel.add(passwd);
         panel.add(passwdInput);
         panel.add(weiter);
+        panel.add(back);
 
         panel.updateUI();
     }
 
     private void menuGui() {
         JButton konto = new JButton("Konto");
-        konto.setBackground(Color.WHITE);
+        konto.setBackground(buttonColor);
+        konto.setBounds(425, 100, 125, 35);
 
         JButton aktien = new JButton("Aktien");
-        aktien.setBackground(Color.WHITE);
+        aktien.setBackground(buttonColor);
+        aktien.setBounds(425, 145, 125, 35);
 
         JButton portfolio = new JButton("Portfolio");
-        portfolio.setBackground(Color.WHITE);
+        portfolio.setBackground(buttonColor);
+        portfolio.setBounds(425, 190, 125, 35);
 
         JButton bank = new JButton("Bank");
-        bank.setBackground(Color.WHITE);
+        bank.setBackground(buttonColor);
+        bank.setBounds(425, 235, 125, 35);
+
+
+        JButton settings = new JButton("Einstellungen");
+        settings.setBackground(buttonColor);
+        settings.setBounds(25, 450, 100, 25);
+
+        settings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Component com : panel.getComponents()) {
+                    panel.remove(com);
+                }
+
+                settingsMenu();
+            }
+        });
 
         panel.add(konto);
         panel.add(aktien);
         panel.add(portfolio);
         panel.add(bank);
+        panel.add(settings);
 
         panel.updateUI();
     }

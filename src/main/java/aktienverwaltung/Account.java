@@ -2,6 +2,7 @@ package aktienverwaltung;
 
 public class Account extends Person {
     private String hashedPassword;
+    private boolean darkMode = false;
 
     //Konstruktor
     public Account(String firstName, String lastName, String email, String hashedPassword, String birthdate, String phonenumber) {
@@ -16,5 +17,13 @@ public class Account extends Person {
     
     public void setHashedPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
+    }
+
+    public boolean getDarkmode() {
+        return darkMode;
+    }
+
+    public void setDarkmode(boolean value) {
+        this.darkMode = value;
     }
 }
