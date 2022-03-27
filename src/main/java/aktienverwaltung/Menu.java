@@ -1,7 +1,6 @@
 package aktienverwaltung;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -53,6 +52,7 @@ public class Menu {
 
     boolean isDarkmode = false;
 
+    Stock[] stocks;
     Account[] accounts;
     Account account;
 
@@ -72,8 +72,7 @@ public class Menu {
         frame.add(panel);
         frame.setVisible(true);
 
-        //registerMenu();
-        //menuGui();
+        //stockMenu();
         gui();
         //start();
     }
@@ -231,9 +230,7 @@ public class Menu {
         settings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Component com : panel.getComponents()) {
-                    panel.remove(com);
-                }
+                panel.removeAll();
 
                 settingsMenu();
             }
@@ -302,9 +299,7 @@ public class Menu {
                     panel.setBackground(Color.DARK_GRAY);
                     isDarkmode = true;
 
-                    for (Component com : panel.getComponents()) {
-                        panel.remove(com);
-                    }
+                    panel.removeAll();
 
                     if (account != null) {
                         account.setDarkmode(true);
@@ -325,9 +320,7 @@ public class Menu {
                     panel.setBackground(Color.WHITE);
                     isDarkmode = false;
 
-                    for (Component com : panel.getComponents()) {
-                        panel.remove(com);
-                    }
+                    panel.removeAll();
 
                     if (account != null) {
                         account.setDarkmode(false);
@@ -411,9 +404,7 @@ public class Menu {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Component com : panel.getComponents()) {
-                    panel.remove(com);
-                }
+                panel.removeAll();
 
                 startMenu();
             }
@@ -509,9 +500,7 @@ public class Menu {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Component com : panel.getComponents()) {
-                    panel.remove(com);
-                }
+                panel.removeAll();
 
                 startMenu();
             }
@@ -600,9 +589,7 @@ public class Menu {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Component com : panel.getComponents()) {
-                    panel.remove(com);
-                }
+                panel.removeAll();
 
                 startMenu();
             }
@@ -635,19 +622,52 @@ public class Menu {
         bank.setBackground(buttonColor);
         bank.setBounds(425, 235, 125, 35);
 
-
         JButton settings = new JButton("Einstellungen");
         settings.setBackground(buttonColor);
-        settings.setBounds(25, 450, 100, 25);
+        settings.setBounds(25, 450, 125, 25);
+
+
+        //add a button to logout
+        JButton logout = new JButton("Abmelden");
+        logout.setBackground(buttonColor);
+        logout.setBounds(800, 450, 100, 25);
+
+        logout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.removeAll();
+
+                String[] msg = { "updateuser", gson.toJson(account) };
+                sendMessage(msg);
+
+                account = null;
+                stocks = null;
+
+                getAllUser();
+
+                startMenu();
+            }
+        });
 
         settings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Component com : panel.getComponents()) {
-                    panel.remove(com);
-                }
+                panel.removeAll();
 
                 settingsMenu();
+            }
+        });
+
+        aktien.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.remove(konto);
+                panel.remove(aktien);
+                panel.remove(portfolio);
+                panel.remove(bank);
+                panel.remove(settings);
+
+                stockMenu();
             }
         });
 
@@ -656,8 +676,193 @@ public class Menu {
         panel.add(portfolio);
         panel.add(bank);
         panel.add(settings);
+        panel.add(logout);
 
         panel.updateUI();
+    }
+
+    private void stockMenu() {
+        getStocks();
+
+        JButton back = new JButton("Zurück");
+        back.setBackground(buttonColor);
+        back.setBounds(800, 450, 100, 25);
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.removeAll();
+
+                menuGui();
+            }
+        });
+
+        for (int i = 0; i < stocks.length; i++) {
+            JButton button = new JButton(stocks[i].getName());
+            button.setBackground(buttonColor);
+            button.setBounds(25, 100 + (i * 35), 125, 35);
+
+            Stock st = stocks[i];
+
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    panel.removeAll();
+
+                    stockInfo(st);
+                }
+            });
+
+            panel.add(button);
+        }
+
+        panel.add(back);
+
+        panel.updateUI();
+    }
+
+    private void stockInfo(Stock stock) {
+        //list the min, max, average and current price of the stock
+        JLabel name = new JLabel("Name: " + stock.getName());
+        JLabel min = new JLabel("Min: " + stock.getMin() + "€");
+        JLabel max = new JLabel("Max: " + stock.getMax() + "€");
+        JLabel average = new JLabel("Durchschnitt: " + stock.getAverage() + "€");
+        JLabel current = new JLabel("Aktueller Preis: " + stock.getCurrentPrice() + "€");
+
+        name.setBounds(25, 100, 200, 25);
+        min.setBounds(25, 125, 200, 25);
+        max.setBounds(25, 150, 200, 25);
+        average.setBounds(25, 175, 200, 25);
+        current.setBounds(25, 200, 200, 25);
+
+        name.setForeground(textColor);
+        min.setForeground(textColor);
+        max.setForeground(textColor);
+        average.setForeground(textColor);
+        current.setForeground(textColor);
+
+        JButton back = new JButton("Zurück");
+        back.setBackground(buttonColor);
+        back.setBounds(800, 450, 100, 25);
+
+        JButton buy = new JButton("Kaufen");
+        buy.setBackground(Color.GREEN);
+        buy.setBounds(425, 100, 125, 35);
+
+        JButton sell = new JButton("Verkaufen");
+        sell.setBackground(Color.RED);
+        sell.setBounds(425, 145, 125, 35);
+
+        buy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.remove(buy);
+                panel.remove(sell);
+
+                JLabel label = new JLabel("Wie viele Aktien möchtest du kaufen?");
+                label.setForeground(textColor);
+                label.setBounds(400, 250, 250, 25);
+
+                JTextField input = new JTextField();
+                input.setBounds(450, 275, 50, 25);
+
+                JButton kaufen = new JButton("Kaufen");
+                kaufen.setBackground(Color.GREEN);
+                kaufen.setBounds(425, 300, 125, 35);
+
+                kaufen.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        
+                    }
+                });
+
+                JButton abbrechen = new JButton("Abbrechen");
+                abbrechen.setBackground(Color.RED);
+                abbrechen.setBounds(425, 345, 125, 35);
+
+                abbrechen.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        panel.remove(label);
+                        panel.remove(input);
+                        panel.remove(kaufen);
+                        panel.remove(abbrechen);
+
+                        panel.add(buy);
+                        panel.add(sell);
+                        panel.updateUI();
+                    }
+                });
+
+                panel.add(label);
+                panel.add(input);
+                panel.add(kaufen);
+                panel.add(abbrechen);
+
+                panel.updateUI();
+            }
+        });
+
+        sell.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.removeAll();
+
+                stockMenu();
+            }
+        });
+
+        JButton settings = new JButton("Einstellungen");
+        settings.setBackground(buttonColor);
+        settings.setBounds(25, 450, 125, 25);
+
+        settings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.removeAll();
+
+                settingsMenu();
+            }
+        });
+
+
+        panel.add(name);
+        panel.add(min);
+        panel.add(max);
+        panel.add(average);
+        panel.add(current);
+        panel.add(settings);
+        panel.add(back);
+        panel.add(buy);
+        panel.add(sell);
+
+        panel.updateUI();
+    }
+
+    private void getStocks() {
+        String[] msg = { "getstocks" };
+        sendMessage(msg);
+
+        System.out.println("getting all stocks");
+
+        String response = "";
+        try {
+            response = bufferedReader.readLine();
+            Stock[] stocks = gson.fromJson(response, Stock[].class);
+            this.stocks = stocks;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Successfully got all stocks");
     }
 
     public void start() {
