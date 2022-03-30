@@ -775,28 +775,28 @@ public class Menu {
 
         JLabel money = new JLabel("Portfolio Geld: " + account.getPortfolio().getMoney());
         money.setForeground(textColor);
-        money.setBounds(25, 100, 125, 35);
+        money.setBounds(25, 100, 200, 35);
 
         float pStocksValue = 0;
+        int stockAmount = 0;
 
-        // TODO: fix this
-        // The Problem: it complains that the return value of the Stocks in the Portfolio is null.
-        if (account.getPortfolio().getStocks().length > 0) {
+        if (account.getPortfolio().getStocks() != null) {
             for (Stock stock : account.getPortfolio().getStocks()) {
                 pStocksValue += stock.getCurrentPrice();
+                stockAmount++;
             }
         }
 
         JLabel stocksValue = new JLabel("Portfolio Aktien Wert: " + pStocksValue);
         stocksValue.setForeground(textColor);
-        stocksValue.setBounds(25, 145, 125, 35);
+        stocksValue.setBounds(25, 145, 200, 35);
 
-        JLabel stockLen = new JLabel("Aktien Anzahl im Portfolio: " + account.getPortfolio().getStocks().length);
+        JLabel stockLen = new JLabel("Aktien Anzahl im Portfolio: " + stockAmount);
         stockLen.setForeground(textColor);
-        stockLen.setBounds(25, 190, 125, 35);
+        stockLen.setBounds(25, 190, 200, 35);
 
         String stockNamesList = "";
-        if (account.getPortfolio().getStocks().length > 0) {
+        if (account.getPortfolio().getStocks() != null) {
             for (int i = 0; i < account.getPortfolio().getStocks().length; i++) {
                 stockNamesList += account.getPortfolio().getStocks()[i].getName();
                 if (i != account.getPortfolio().getStocks().length - 1) {
@@ -810,7 +810,9 @@ public class Menu {
 
         JLabel stockNames = new JLabel("Aktien Namen: " + stockNamesList);
         stockNames.setForeground(textColor);
-        stockNames.setBounds(25, 235, 125, 35);
+        stockNames.setBounds(25, 235, 250, 35);
+
+        panel.updateUI();
 
         panel.add(back);
         panel.add(stocksValue);
