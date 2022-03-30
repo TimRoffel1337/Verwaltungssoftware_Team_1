@@ -23,7 +23,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
@@ -161,16 +160,7 @@ public class Menu {
             if (connectToServer()) {
                 System.out.println("Gettings all user");
 
-                String[] serverMsg = { "getusers" };
-                sendMessage(serverMsg);
-        
-                try {
-                    accounts = gson.fromJson(bufferedReader.readLine(), Account[].class);
-                } catch (JsonSyntaxException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                getAllUser();
         
                 System.out.println("Successfully got all user");
 
@@ -499,7 +489,8 @@ public class Menu {
                     panel.remove(weiter);
                     panel.remove(back);
 
-                    Account newAccount = new Account(fNameStr, lNameStr, email, hashPassword(passwd), birthdateStr, phonenumberStr);
+                    Portfolio portfolio = new Portfolio(1000);
+                    Account newAccount = new Account(fNameStr, lNameStr, email, hashPassword(passwd), birthdateStr, phonenumberStr, portfolio);
                     String[] msg = { "adduser", gson.toJson(newAccount) };
                     sendMessage(msg);
 
@@ -661,8 +652,9 @@ public class Menu {
                 account = null;
                 stocks = null;
 
-                getAllUser();
+                System.out.println("Logging out");
 
+                getAllUser();
                 startMenu();
             }
         });
@@ -690,6 +682,19 @@ public class Menu {
             }
         });
 
+        portfolio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.remove(konto);
+                panel.remove(aktien);
+                panel.remove(portfolio);
+                panel.remove(bank);
+                panel.remove(logout);
+
+                portfolioMenu();
+            }
+        });
+
         panel.add(konto);
         panel.add(aktien);
         panel.add(portfolio);
@@ -706,6 +711,19 @@ public class Menu {
         JButton back = new JButton("Zurück");
         back.setBackground(buttonColor);
         back.setBounds(800, 450, 100, 25);
+
+        JButton settings = new JButton("Einstellungen");
+        settings.setBackground(buttonColor);
+        settings.setBounds(25, 450, 125, 25);
+
+        settings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.removeAll();
+
+                settingsMenu();
+            }
+        });
 
         back.addActionListener(new ActionListener() {
             @Override
@@ -736,8 +754,68 @@ public class Menu {
         }
 
         panel.add(back);
+        panel.add(settings);
 
         panel.updateUI();
+    }
+
+    private void portfolioMenu() {
+        JButton back = new JButton("Zurück");
+        back.setBackground(buttonColor);
+        back.setBounds(800, 450, 100, 25);
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.removeAll();
+
+                menuGui();
+            }
+        });
+
+        JLabel money = new JLabel("Portfolio Geld: " + account.getPortfolio().getMoney());
+        money.setForeground(textColor);
+        money.setBounds(25, 100, 125, 35);
+
+        float pStocksValue = 0;
+
+        // TODO: fix this
+        // The Problem: it complains that the return value of the Stocks in the Portfolio is null.
+        if (account.getPortfolio().getStocks().length > 0) {
+            for (Stock stock : account.getPortfolio().getStocks()) {
+                pStocksValue += stock.getCurrentPrice();
+            }
+        }
+
+        JLabel stocksValue = new JLabel("Portfolio Aktien Wert: " + pStocksValue);
+        stocksValue.setForeground(textColor);
+        stocksValue.setBounds(25, 145, 125, 35);
+
+        JLabel stockLen = new JLabel("Aktien Anzahl im Portfolio: " + account.getPortfolio().getStocks().length);
+        stockLen.setForeground(textColor);
+        stockLen.setBounds(25, 190, 125, 35);
+
+        String stockNamesList = "";
+        if (account.getPortfolio().getStocks().length > 0) {
+            for (int i = 0; i < account.getPortfolio().getStocks().length; i++) {
+                stockNamesList += account.getPortfolio().getStocks()[i].getName();
+                if (i != account.getPortfolio().getStocks().length - 1) {
+                    stockNamesList += ", ";
+                }
+            }
+        }
+        else {
+            stockNamesList = "Keine Aktien im Portfolio";
+        }
+
+        JLabel stockNames = new JLabel("Aktien Namen: " + stockNamesList);
+        stockNames.setForeground(textColor);
+        stockNames.setBounds(25, 235, 125, 35);
+
+        panel.add(back);
+        panel.add(stocksValue);
+        panel.add(stockLen);
+        panel.add(stockNames);
     }
 
     private void stockInfo(Stock stock) {
@@ -748,11 +826,11 @@ public class Menu {
         JLabel average = new JLabel("Durchschnitt: " + stock.getAverage() + "€");
         JLabel current = new JLabel("Aktueller Preis: " + stock.getCurrentPrice() + "€");
 
-        name.setBounds(25, 100, 200, 25);
-        min.setBounds(25, 125, 200, 25);
-        max.setBounds(25, 150, 200, 25);
-        average.setBounds(25, 175, 200, 25);
-        current.setBounds(25, 200, 200, 25);
+        name.setBounds(400, 100, 200, 25);
+        min.setBounds(400, 125, 200, 25);
+        max.setBounds(400, 150, 200, 25);
+        average.setBounds(400, 175, 200, 25);
+        current.setBounds(400, 200, 200, 25);
 
         name.setForeground(textColor);
         min.setForeground(textColor);
@@ -766,11 +844,11 @@ public class Menu {
 
         JButton buy = new JButton("Kaufen");
         buy.setBackground(Color.GREEN);
-        buy.setBounds(425, 100, 125, 35);
+        buy.setBounds(400, 250, 125, 35);
 
         JButton sell = new JButton("Verkaufen");
         sell.setBackground(Color.RED);
-        sell.setBounds(425, 145, 125, 35);
+        sell.setBounds(400, 295, 125, 35);
 
         buy.addActionListener(new ActionListener() {
             @Override
@@ -780,25 +858,63 @@ public class Menu {
 
                 JLabel label = new JLabel("Wie viele Aktien möchtest du kaufen?");
                 label.setForeground(textColor);
-                label.setBounds(400, 250, 250, 25);
+                label.setBounds(360, 250, 250, 25);
 
                 JTextField input = new JTextField();
-                input.setBounds(450, 275, 50, 25);
+                input.setBounds(435, 285, 50, 25);
 
                 JButton kaufen = new JButton("Kaufen");
                 kaufen.setBackground(Color.GREEN);
-                kaufen.setBounds(425, 300, 125, 35);
+                kaufen.setBounds(400, 325, 125, 35);
+
+                JLabel notEnough = new JLabel("Du hast nicht genug Geld!");
+                notEnough.setForeground(Color.RED);
+                notEnough.setBounds(400, 425, 200, 25);
+                notEnough.setVisible(false);
+
+                JLabel isValidNumber = new JLabel("Bitte gib eine gültige Anzahl an!");
+                isValidNumber.setForeground(Color.RED);
+                isValidNumber.setBounds(385, 425, 200, 25);
+                isValidNumber.setVisible(false);
 
                 kaufen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        
+                        String inputStr = input.getText();
+
+                        if (notEnough.isVisible()) {
+                            notEnough.setVisible(false);
+                        }
+                        if (isValidNumber.isValid()) {
+                            isValidNumber.setVisible(false);
+                        }
+
+                        int inputInt = 0;
+                        try {
+                            inputInt = Integer.parseInt(inputStr);
+
+                            if (inputInt > 0 && account.getPortfolio().getMoney() >= inputInt * stock.getCurrentPrice()) {
+                                account.getPortfolio().removeMoney(inputInt * stock.getCurrentPrice());
+                                account.getPortfolio().addStock(stock, inputInt);
+                            } else {
+                                if (!(account.getPortfolio().getMoney() >= inputInt * stock.getCurrentPrice())) {
+                                    notEnough.setVisible(true);
+                                    panel.updateUI();   
+                                }
+                                else if (!(inputInt > 0)) {
+                                    isValidNumber.setVisible(true);
+                                    panel.updateUI();
+                                }
+                            }
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Invalid input");
+                        }
                     }
                 });
 
                 JButton abbrechen = new JButton("Abbrechen");
                 abbrechen.setBackground(Color.RED);
-                abbrechen.setBounds(425, 345, 125, 35);
+                abbrechen.setBounds(400, 370, 125, 35);
 
                 abbrechen.addActionListener(new ActionListener() {
                     @Override
@@ -807,6 +923,8 @@ public class Menu {
                         panel.remove(input);
                         panel.remove(kaufen);
                         panel.remove(abbrechen);
+                        panel.remove(notEnough);
+                        panel.remove(isValidNumber);
 
                         panel.add(buy);
                         panel.add(sell);
@@ -814,6 +932,8 @@ public class Menu {
                     }
                 });
 
+                panel.add(isValidNumber);
+                panel.add(notEnough);
                 panel.add(label);
                 panel.add(input);
                 panel.add(kaufen);
@@ -973,7 +1093,14 @@ public class Menu {
         String usersString;
         try {
             usersString = bufferedReader.readLine();
-            accounts = gson.fromJson(usersString, Account[].class);
+            String[] accountsStr = gson.fromJson(usersString, String[].class);
+
+            Account[] users = new Account[accountsStr.length];
+            for (int i = 0; i < accountsStr.length; i++) {
+                users[i] = gson.fromJson(accountsStr[i], Account.class);
+            }
+
+            this.accounts = users;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1067,7 +1194,6 @@ public class Menu {
 
     //email regex
     private boolean isEmailValid(String email) {
-        String tempmail;
         String regex = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
         boolean matchFound = false;
 
