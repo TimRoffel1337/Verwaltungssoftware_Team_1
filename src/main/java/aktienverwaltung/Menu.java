@@ -186,6 +186,24 @@ public class Menu {
 
         frame.setSize(960, 540);
         frame.setTitle("Aktienverwaltungs Programm");
+
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                System.out.println("Closing");
+                try {
+                    String[] msg = { "updateuser", gson.toJson(account)};
+                    sendMessage(msg);
+
+                    outPutStreamWriter.close();
+                    inputStreamReader.close();
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         panel.setBackground(bgColor);
@@ -666,6 +684,7 @@ public class Menu {
                 panel.remove(portfolio);
                 panel.remove(bank);
                 panel.remove(settings);
+                panel.remove(logout);
 
                 stockMenu();
             }
