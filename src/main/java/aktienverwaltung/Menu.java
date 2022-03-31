@@ -494,12 +494,7 @@ public class Menu {
                     String[] msg = { "adduser", gson.toJson(newAccount) };
                     sendMessage(msg);
 
-                    Account[] newAccounts = new Account[accounts.length + 1];
-                    for (int i = 0; i < accounts.length - 1; i++) {
-                        newAccounts[i] = accounts[i];
-                    }
-                    newAccounts[accounts.length] = newAccount;
-                    accounts = newAccounts;
+                    getAllUser();
 
                     startMenu();
                 }
@@ -852,11 +847,17 @@ public class Menu {
         sell.setBackground(Color.RED);
         sell.setBounds(400, 295, 125, 35);
 
+        JLabel success = new JLabel("Aktie erfolgreich gekauft");
+        success.setForeground(Color.GREEN);
+        success.setBounds(390, 375, 200, 25);
+
         buy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 panel.remove(buy);
                 panel.remove(sell);
+
+                success.setVisible(false);
 
                 JLabel label = new JLabel("Wie viele Aktien möchtest du kaufen?");
                 label.setForeground(textColor);
@@ -898,6 +899,13 @@ public class Menu {
                             if (inputInt > 0 && account.getPortfolio().getMoney() >= inputInt * stock.getCurrentPrice()) {
                                 account.getPortfolio().removeMoney(inputInt * stock.getCurrentPrice());
                                 account.getPortfolio().addStock(stock, inputInt);
+
+                                panel.removeAll();
+
+                                success.setVisible(true);
+                                panel.updateUI();
+
+                                stockInfo(stock);
                             } else {
                                 if (!(account.getPortfolio().getMoney() >= inputInt * stock.getCurrentPrice())) {
                                     notEnough.setVisible(true);
@@ -921,6 +929,8 @@ public class Menu {
                 abbrechen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        success.setVisible(false);
+
                         panel.remove(label);
                         panel.remove(input);
                         panel.remove(kaufen);
@@ -940,6 +950,7 @@ public class Menu {
                 panel.add(input);
                 panel.add(kaufen);
                 panel.add(abbrechen);
+                panel.add(success);
 
                 panel.updateUI();
             }
