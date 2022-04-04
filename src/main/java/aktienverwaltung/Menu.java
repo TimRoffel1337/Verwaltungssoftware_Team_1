@@ -776,8 +776,17 @@ public class Menu {
         int stockAmount = 0;
 
         if (account.getPortfolio().getStocks() != null) {
-            for (Stock stock : account.getPortfolio().getStocks()) {
-                pStocksValue += stock.getCurrentPrice();
+            for (String stock : account.getPortfolio().getStocks()) {
+                int amount = 0;
+                for (int i = 0; i < stocks.length; i++) {
+                    Stock st = stocks[i];
+
+                    if (st.getName().equals(stock)) {
+                        amount = st.getCurrentPrice();
+                    }
+                }
+
+                pStocksValue += amount;
                 stockAmount++;
             }
         }
@@ -793,7 +802,7 @@ public class Menu {
         String stockNamesList = "";
         if (account.getPortfolio().getStocks() != null) {
             for (int i = 0; i < account.getPortfolio().getStocks().length; i++) {
-                stockNamesList += account.getPortfolio().getStocks()[i].getName();
+                stockNamesList += account.getPortfolio().getStocks()[i];
                 if (i != account.getPortfolio().getStocks().length - 1) {
                     stockNamesList += ", ";
                 }
@@ -816,7 +825,6 @@ public class Menu {
     }
 
     private void stockInfo(Stock stock) {
-        //list the min, max, average and current price of the stock
         JLabel name = new JLabel("Name: " + stock.getName());
         JLabel min = new JLabel("Min: " + stock.getMin() + "€");
         JLabel max = new JLabel("Max: " + stock.getMax() + "€");
@@ -857,11 +865,11 @@ public class Menu {
                 panel.remove(buy);
                 panel.remove(sell);
 
-                success.setVisible(false);
+                panel.updateUI();
 
-                JLabel label = new JLabel("Wie viele Aktien möchtest du kaufen?");
-                label.setForeground(textColor);
-                label.setBounds(360, 250, 250, 25);
+                JLabel howMuch = new JLabel("Wie viele Aktien möchtest du kaufen?");
+                howMuch.setForeground(textColor);
+                howMuch.setBounds(360, 250, 250, 25);
 
                 JTextField input = new JTextField();
                 input.setBounds(435, 285, 50, 25);
@@ -885,12 +893,8 @@ public class Menu {
                     public void actionPerformed(ActionEvent e) {
                         String inputStr = input.getText();
 
-                        if (notEnough.isVisible()) {
-                            notEnough.setVisible(false);
-                        }
-                        if (isValidNumber.isValid()) {
-                            isValidNumber.setVisible(false);
-                        }
+                        notEnough.setVisible(false);
+                        isValidNumber.setVisible(false);
 
                         int inputInt = 0;
                         try {
@@ -898,11 +902,10 @@ public class Menu {
 
                             if (inputInt > 0 && account.getPortfolio().getMoney() >= inputInt * stock.getCurrentPrice()) {
                                 account.getPortfolio().removeMoney(inputInt * stock.getCurrentPrice());
-                                account.getPortfolio().addStock(stock, inputInt);
+                                account.getPortfolio().addStock(stock.getName(), inputInt);
 
                                 panel.removeAll();
-
-                                success.setVisible(true);
+                                panel.add(success);
                                 panel.updateUI();
 
                                 stockInfo(stock);
@@ -929,28 +932,30 @@ public class Menu {
                 abbrechen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        success.setVisible(false);
+                        notEnough.setVisible(false);
+                        isValidNumber.setVisible(false);
 
-                        panel.remove(label);
+                        panel.remove(howMuch);
                         panel.remove(input);
                         panel.remove(kaufen);
                         panel.remove(abbrechen);
                         panel.remove(notEnough);
                         panel.remove(isValidNumber);
+                        panel.remove(success);
 
                         panel.add(buy);
                         panel.add(sell);
+
                         panel.updateUI();
                     }
                 });
 
                 panel.add(isValidNumber);
                 panel.add(notEnough);
-                panel.add(label);
+                panel.add(howMuch);
                 panel.add(input);
                 panel.add(kaufen);
                 panel.add(abbrechen);
-                panel.add(success);
 
                 panel.updateUI();
             }
@@ -959,7 +964,101 @@ public class Menu {
         sell.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                panel.remove(buy);
+                panel.remove(sell);
 
+                panel.updateUI();
+
+                JLabel howMuch = new JLabel("Wie viele Aktien möchtest du verkaufen?");
+                howMuch.setForeground(textColor);
+                howMuch.setBounds(360, 250, 250, 25);
+
+                JTextField input = new JTextField();
+                input.setBounds(435, 285, 50, 25);
+
+                JButton verkaufen = new JButton("Verkaufen");
+                verkaufen.setBackground(Color.GREEN);
+                verkaufen.setBounds(400, 325, 125, 35);
+
+                JLabel isValidNumber = new JLabel("Bitte gib eine gültige Anzahl an!");
+                isValidNumber.setForeground(Color.RED);
+                isValidNumber.setBounds(385, 425, 200, 25);
+                isValidNumber.setVisible(false);
+
+                JLabel notEnough = new JLabel("Du hast nicht genug Aktien");
+                notEnough.setForeground(Color.RED);
+                notEnough.setBounds(400, 425, 200, 25);
+                notEnough.setVisible(false);
+
+                verkaufen.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String inputStr = input.getText();
+                        isValidNumber.setVisible(false);
+
+                        notEnough.setVisible(false);
+                        isValidNumber.setVisible(false);
+
+                        int inputInt = 0;
+                        try {
+                            inputInt = Integer.parseInt(inputStr);
+
+                            int stockAmount = 0;
+                            for (String s : account.getPortfolio().getStocks()) {
+                                if (s.equals(stock.getName())) {
+                                    stockAmount++;
+                                }
+                            }
+
+                            if (stockAmount >= inputInt && inputInt > 0) {
+
+                            }
+                            else {
+                                if (stockAmount < inputInt) {
+                                    notEnough.setVisible(true);
+                                }
+                                else if (inputInt < 0) {
+                                    isValidNumber.setVisible(true);
+                                }
+                            }
+
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Invalid input");
+                        }
+                    }
+                });
+
+                JButton abbrechen = new JButton("Abbrechen");
+                abbrechen.setBackground(Color.RED);
+                abbrechen.setBounds(400, 370, 125, 35);
+
+                abbrechen.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        isValidNumber.setVisible(false);
+
+                        panel.remove(howMuch);
+                        panel.remove(input);
+                        panel.remove(verkaufen);
+                        panel.remove(abbrechen);
+                        panel.remove(isValidNumber);
+                        panel.remove(success);
+
+                        panel.add(buy);
+                        panel.add(sell);
+
+                        panel.updateUI();
+                    }
+                });
+
+                panel.add(isValidNumber);
+                panel.add(howMuch);
+                panel.add(input);
+                panel.add(verkaufen);
+                panel.add(abbrechen);
+                panel.add(notEnough);
+
+                panel.updateUI();
             }
         });
 
