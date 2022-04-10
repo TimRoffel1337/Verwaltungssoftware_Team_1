@@ -64,12 +64,12 @@ public class Menu {
         panel.setLayout(null);
 
         //ENTFERNEN
-        frame.setSize(960, 540);
+        /*frame.setSize(960, 540);
         frame.setTitle("Aktienverwaltungs Programm");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.add(panel);
-        frame.setVisible(true);
+        frame.setVisible(true);*/
 
         //stockMenu();
         gui();
@@ -159,18 +159,18 @@ public class Menu {
 
             if (connectToServer()) {
                 System.out.println("Gettings all user");
-
                 getAllUser();
-        
                 System.out.println("Successfully got all user");
-
                 startMenu();
             }
             else {
                 JLabel errorMsg = new JLabel("Es konnte keine Verbindung zum Server hergestellt werden");
                 errorMsg.setForeground(Color.RED);
 
+                System.out.println("testestestestestetsess");
+
                 panel.add(errorMsg);
+                panel.updateUI();
             }
         }
 
@@ -610,6 +610,8 @@ public class Menu {
     }
 
     private void menuGui() {
+        getStocks();
+
         JButton konto = new JButton("Konto");
         konto.setBackground(buttonColor);
         konto.setBounds(425, 100, 125, 35);
@@ -799,18 +801,22 @@ public class Menu {
         stockLen.setForeground(textColor);
         stockLen.setBounds(25, 190, 200, 35);
 
+        System.out.println("test5");
+
         String stockNamesList = "";
         if (account.getPortfolio().getStocks() != null) {
-            for (int i = 0; i < account.getPortfolio().getStocks().length; i++) {
-                stockNamesList += account.getPortfolio().getStocks()[i];
-                if (i != account.getPortfolio().getStocks().length - 1) {
-                    stockNamesList += ", ";
+            for (String st : account.getPortfolio().getStocks()) {
+                System.out.println(st);
+                if (stockNamesList.contains("test")) {
+                    System.out.println("test");
                 }
             }
         }
         else {
             stockNamesList = "Keine Aktien im Portfolio";
         }
+
+        System.out.println("test6");
 
         JLabel stockNames = new JLabel("Aktien Namen: " + stockNamesList);
         stockNames.setForeground(textColor);
@@ -822,6 +828,7 @@ public class Menu {
         panel.add(stocksValue);
         panel.add(stockLen);
         panel.add(stockNames);
+        panel.add(money);
     }
 
     private void stockInfo(Stock stock) {
@@ -980,24 +987,34 @@ public class Menu {
                 verkaufen.setBackground(Color.GREEN);
                 verkaufen.setBounds(400, 325, 125, 35);
 
-                JLabel isValidNumber = new JLabel("Bitte gib eine gültige Anzahl an!");
-                isValidNumber.setForeground(Color.RED);
-                isValidNumber.setBounds(385, 425, 200, 25);
-                isValidNumber.setVisible(false);
+                JButton abbrechen = new JButton("Abbrechen");
+                abbrechen.setBackground(Color.RED);
+                abbrechen.setBounds(400, 370, 125, 35);
+
+                JLabel inValidNumber = new JLabel("Bitte gib eine gültige Anzahl an!");
+                inValidNumber.setForeground(Color.RED);
+                inValidNumber.setBounds(385, 425, 200, 25);
+                inValidNumber.setVisible(false);
 
                 JLabel notEnough = new JLabel("Du hast nicht genug Aktien");
                 notEnough.setForeground(Color.RED);
                 notEnough.setBounds(400, 425, 200, 25);
                 notEnough.setVisible(false);
 
+                JLabel successfull = new JLabel("Aktien erfolgreich verkauft");
+                successfull.setForeground(Color.GREEN);
+                successfull.setBounds(390, 375, 200, 25);
+                successfull.setVisible(false);
+
                 verkaufen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         String inputStr = input.getText();
-                        isValidNumber.setVisible(false);
 
+                        inValidNumber.setVisible(false);
                         notEnough.setVisible(false);
-                        isValidNumber.setVisible(false);
+                        inValidNumber.setVisible(false);
+                        successfull.setVisible(false);
 
                         int inputInt = 0;
                         try {
@@ -1011,15 +1028,25 @@ public class Menu {
                             }
 
                             if (stockAmount >= inputInt && inputInt > 0) {
+                                account.getPortfolio().removeStock(stock.getName(), inputInt);
+                                account.getPortfolio().addMoney(inputInt * stock.getCurrentPrice());
+                                successfull.setVisible(true);
 
+                                panel.remove(verkaufen);
+                                panel.remove(abbrechen);
+                                panel.remove(howMuch);
+                                panel.remove(input);
+
+                                panel.updateUI();
                             }
                             else {
                                 if (stockAmount < inputInt) {
                                     notEnough.setVisible(true);
                                 }
-                                else if (inputInt < 0) {
-                                    isValidNumber.setVisible(true);
+                                else if (inputInt <= 0) {
+                                    inValidNumber.setVisible(true);
                                 }
+                                panel.updateUI();
                             }
 
                         } catch (NumberFormatException ex) {
@@ -1028,20 +1055,16 @@ public class Menu {
                     }
                 });
 
-                JButton abbrechen = new JButton("Abbrechen");
-                abbrechen.setBackground(Color.RED);
-                abbrechen.setBounds(400, 370, 125, 35);
-
                 abbrechen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        isValidNumber.setVisible(false);
+                        inValidNumber.setVisible(false);
 
                         panel.remove(howMuch);
                         panel.remove(input);
                         panel.remove(verkaufen);
                         panel.remove(abbrechen);
-                        panel.remove(isValidNumber);
+                        panel.remove(inValidNumber);
                         panel.remove(success);
 
                         panel.add(buy);
@@ -1051,12 +1074,13 @@ public class Menu {
                     }
                 });
 
-                panel.add(isValidNumber);
+                panel.add(inValidNumber);
                 panel.add(howMuch);
                 panel.add(input);
                 panel.add(verkaufen);
                 panel.add(abbrechen);
                 panel.add(notEnough);
+                panel.add(successfull);
 
                 panel.updateUI();
             }

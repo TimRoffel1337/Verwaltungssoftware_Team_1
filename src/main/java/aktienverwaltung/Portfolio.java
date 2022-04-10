@@ -55,16 +55,9 @@ public class Portfolio {
         if (this.stocks == null) {
             return;
         } else {
-            for (int k = 0; k < amount; k++) {
-                String[] temp = new String[this.stocks.length - 1];
-                int j = 0;
-                for (int i = 0; i < this.stocks.length; i++) {
-                    if (this.stocks[i] != stock) {
-                        temp[j] = this.stocks[i];
-                        j++;
-                    }
-                }
-                this.stocks = temp;
+            String[] newStocks = new String[this.stocks.length - amount];
+            for (int i = 0; i < this.stocks.length; i++) {
+                
             }
         }
     }
