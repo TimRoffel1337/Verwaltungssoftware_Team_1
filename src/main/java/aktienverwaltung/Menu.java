@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 import com.google.gson.Gson;
 
@@ -66,12 +67,12 @@ public class Menu {
         panel.setLayout(null);
 
         //ENTFERNEN
-        frame.setSize(960, 540);
+        /*frame.setSize(960, 540);
         frame.setTitle("Aktienverwaltungs Programm");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.add(panel);
-        frame.setVisible(true);
+        frame.setVisible(true);*/
 
         //stockMenu();
         gui();
@@ -117,31 +118,7 @@ public class Menu {
                     ip = ipField.getText();
                     port = Short.valueOf(portField.getText());
     
-                    JLabel errorMsg = new JLabel("Es konnte keine Verbindung mit dem Server aufgebaut werden");
-                    errorMsg.setForeground(Color.RED);
-                    errorMsg.setBounds(380, 200, 300, 20);
-    
-                    if (connectToServer()) {
-                        panel.remove(portField);
-                        panel.remove(ipField);
-                        panel.remove(weiter);
-                        panel.remove(ipLabel);
-                        panel.remove(portLabel);
-    
-                        if (panel.isAncestorOf(errorMsg)) {
-                            panel.remove(errorMsg);
-                        }
-
-                        saveIpandPort(ipFile, portFile);
-    
-                        panel.updateUI();
-                        startMenu();
-                    }
-                    else {
-                        panel.add(errorMsg);
-
-                        panel.updateUI();
-                    }
+                    connectionNotPossibleMenu();
                 }
             });
         }
@@ -163,11 +140,8 @@ public class Menu {
 
             if (connectToServer()) {
                 System.out.println("Gettings all user");
-
                 getAllUser();
-        
                 System.out.println("Successfully got all user");
-
                 startMenu();
             }
             else {
@@ -186,9 +160,15 @@ public class Menu {
                     String[] msg = { "updateuser", gson.toJson(account)};
                     sendMessage(msg);
 
-                    outPutStreamWriter.close();
-                    inputStreamReader.close();
-                    socket.close();
+                    if (outPutStreamWriter != null) {
+                        outPutStreamWriter.close();
+                    }
+                    if (inputStreamReader != null) {
+                        inputStreamReader.close();
+                    }
+                    if (socket != null) {
+                        socket.close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -208,18 +188,6 @@ public class Menu {
         errorMsg.setForeground(Color.RED);
         errorMsg.setBounds(325, 200, 350, 20);
 
-        JButton settings = new JButton("Einstellungen");
-        settings.setBackground(buttonColor);
-        settings.setBounds(25, 450, 125, 25);
-        settings.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.removeAll();
-
-                settingsMenu();
-            }
-        });
-
         JButton tryAgain = new JButton("Erneut versuchen");
         tryAgain.setBackground(buttonColor);
         tryAgain.setBounds(420, 225, 150, 25);
@@ -232,7 +200,8 @@ public class Menu {
             }
         });
 
-        panel.add(settings);
+        settingsButton();
+
         panel.add(errorMsg);
         panel.add(tryAgain);
         panel.updateUI();
@@ -246,10 +215,6 @@ public class Menu {
         JButton register = new JButton("Registrieren");
         register.setBackground(buttonColor);
         register.setBounds(420, 190, 125, 25);
-
-        JButton settings = new JButton("Einstellungen");
-        settings.setBackground(buttonColor);
-        settings.setBounds(25, 450, 125, 25);
 
         register.addActionListener(new ActionListener() {
             @Override
@@ -271,18 +236,10 @@ public class Menu {
             }
         });
 
-        settings.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.removeAll();
-
-                settingsMenu();
-            }
-        });
+        settingsButton();
 
         panel.add(login);
         panel.add(register);
-        panel.add(settings);
 
         panel.updateUI();
     }
@@ -336,6 +293,7 @@ public class Menu {
                     buttonColor = Color.lightGray;
                     textColor = Color.WHITE;
                     fieldColor = Color.lightGray;
+                    account.setDarkmode(true);
 
                     panel.setBackground(Color.DARK_GRAY);
                     isDarkmode = true;
@@ -347,6 +305,7 @@ public class Menu {
                     textColor = Color.BLACK;
                     buttonColor = Color.WHITE;
                     fieldColor = Color.WHITE;
+                    account.setDarkmode(false);
 
                     panel.setBackground(Color.WHITE);
                     isDarkmode = false;
@@ -399,6 +358,23 @@ public class Menu {
         panel.updateUI();
     }
 
+    private void settingsButton() {
+        JButton settings = new JButton("Einstellungen");
+        settings.setBackground(buttonColor);
+        settings.setBounds(25, 450, 125, 25);
+        settings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.removeAll();
+
+                settingsMenu();
+            }
+        });
+
+        panel.add(settings);
+        panel.updateUI();
+    }
+
     private void registerMenu() {
         JLabel email = new JLabel("E-mail:");
         JLabel passwd = new JLabel("Passwort:");
@@ -440,14 +416,7 @@ public class Menu {
                 String passwordRepeat = String.valueOf(passwdRepeatInput.getPassword());
 
                 if (password.equals(passwordRepeat) && isEmailValid(emailStr)) {
-                    panel.remove(email);
-                    panel.remove(passwd);
-                    panel.remove(passwdRepeat);
-                    panel.remove(emailInput);
-                    panel.remove(passwdInput);
-                    panel.remove(passwdRepeatInput);
-                    panel.remove(weiter);
-                    panel.remove(back);
+                    panel.removeAll();
 
                     register2(emailStr, password);
                 }
@@ -523,19 +492,11 @@ public class Menu {
                 String phonenumberStr = phonenumberInput.getText();
 
                 if ((fNameStr != null && lNameStr != null && birthdateStr != null && phonenumberStr != null) && isValidBirthdate(birthdateStr)) {
-                    panel.remove(firstName);
-                    panel.remove(lastName);
-                    panel.remove(birthdate);
-                    panel.remove(phonenumber);
-                    panel.remove(fNameInput);
-                    panel.remove(lNameInput);
-                    panel.remove(birthdateInput);
-                    panel.remove(phonenumberInput);
-                    panel.remove(weiter);
-                    panel.remove(back);
+                    panel.removeAll();
 
                     Portfolio portfolio = new Portfolio(1000);
-                    Account newAccount = new Account(fNameStr, lNameStr, email, hashPassword(passwd), birthdateStr, phonenumberStr, portfolio);
+                    Bank bank = new Bank(1000);
+                    Account newAccount = new Account(fNameStr, lNameStr, email, hashPassword(passwd), birthdateStr, phonenumberStr, portfolio, bank);
                     String[] msg = { "adduser", gson.toJson(newAccount) };
                     sendMessage(msg);
 
@@ -556,12 +517,12 @@ public class Menu {
         });
 
         panel.add(firstName);
-        panel.add(fNameInput);
         panel.add(lastName);
-        panel.add(lNameInput);
         panel.add(birthdate);
-        panel.add(birthdateInput);
         panel.add(phonenumber);
+        panel.add(fNameInput);
+        panel.add(lNameInput);
+        panel.add(birthdateInput);
         panel.add(phonenumberInput);
         panel.add(weiter);
         panel.add(back);
@@ -601,12 +562,7 @@ public class Menu {
             public void actionPerformed(ActionEvent e) {
                 for (Account acc : accounts) {
                     if (acc.getEmail().equals(emailInput.getText()) && acc.getHashedPassword().equals(hashPassword(String.valueOf(passwdInput.getPassword())))) {
-                        panel.remove(email);
-                        panel.remove(emailInput);
-                        panel.remove(passwd);
-                        panel.remove(passwdInput);
-                        panel.remove(weiter);
-                        panel.remove(back);
+                        panel.removeAll();
 
                         account = acc;
                         isDarkmode = account.getDarkmode();
@@ -627,6 +583,8 @@ public class Menu {
         
                             panel.setBackground(Color.WHITE);
                         }
+
+                        settingsButton();
 
                         panel.updateUI();
                         menuGui();
@@ -657,10 +615,6 @@ public class Menu {
     private void menuGui() {
         getStocks();
 
-        JButton konto = new JButton("Konto");
-        konto.setBackground(buttonColor);
-        konto.setBounds(425, 100, 125, 35);
-
         JButton aktien = new JButton("Aktien");
         aktien.setBackground(buttonColor);
         aktien.setBounds(425, 145, 125, 35);
@@ -673,22 +627,27 @@ public class Menu {
         bank.setBackground(buttonColor);
         bank.setBounds(425, 235, 125, 35);
 
-        JButton settings = new JButton("Einstellungen");
-        settings.setBackground(buttonColor);
-        settings.setBounds(25, 450, 125, 25);
-
 
         //add a button to logout
         JButton logout = new JButton("Abmelden");
         logout.setBackground(buttonColor);
         logout.setBounds(800, 450, 100, 25);
 
+        bank.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.removeAll();
+
+                bankMenu();
+            }
+        });
+
         logout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 panel.removeAll();
 
-                String[] msg = { "updateuser", gson.toJson(account) };
+                String[] msg = { "updateuser", gson.toJson(account)};
                 sendMessage(msg);
 
                 account = null;
@@ -701,23 +660,12 @@ public class Menu {
             }
         });
 
-        settings.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.removeAll();
-
-                settingsMenu();
-            }
-        });
-
         aktien.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panel.remove(konto);
                 panel.remove(aktien);
                 panel.remove(portfolio);
                 panel.remove(bank);
-                panel.remove(settings);
                 panel.remove(logout);
 
                 stockMenu();
@@ -727,7 +675,6 @@ public class Menu {
         portfolio.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panel.remove(konto);
                 panel.remove(aktien);
                 panel.remove(portfolio);
                 panel.remove(bank);
@@ -737,14 +684,14 @@ public class Menu {
             }
         });
 
-        panel.add(konto);
         panel.add(aktien);
         panel.add(portfolio);
         panel.add(bank);
-        panel.add(settings);
         panel.add(logout);
 
         panel.updateUI();
+
+        settingsButton();
     }
 
     private void stockMenu() {
@@ -754,18 +701,7 @@ public class Menu {
         back.setBackground(buttonColor);
         back.setBounds(800, 450, 100, 25);
 
-        JButton settings = new JButton("Einstellungen");
-        settings.setBackground(buttonColor);
-        settings.setBounds(25, 450, 125, 25);
-
-        settings.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.removeAll();
-
-                settingsMenu();
-            }
-        });
+        settingsButton();
 
         back.addActionListener(new ActionListener() {
             @Override
@@ -805,12 +741,77 @@ public class Menu {
         }
 
         panel.add(back);
-        panel.add(settings);
+
+        panel.updateUI();
+    }
+
+    private void bankMenu() {
+        panel.removeAll();
+        settingsButton();
+
+        JLabel money = new JLabel("Geld: " + account.getBank().getMoney() + " €");
+        money.setForeground(textColor);
+        money.setBounds(25, 100, 125, 35);
+
+        JButton back = new JButton("Zurück");
+        back.setBackground(buttonColor);
+        back.setBounds(800, 450, 100, 25);
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.removeAll();
+
+                menuGui();
+            }
+        });
+
+        JButton sendToPortfolio = new JButton("Überweisung zum Portfolio");
+        sendToPortfolio.setBackground(buttonColor);
+        sendToPortfolio.setBounds(400, 350, 200, 35);
+
+        sendToPortfolio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.remove(sendToPortfolio);
+
+                JLabel text = new JLabel("Betrag:");
+                text.setForeground(textColor);
+                text.setBounds(425, 190, 125, 35);
+
+                JTextField amount = new JTextField();
+                amount.setBounds(425, 235, 125, 35);
+
+                JButton send = new JButton("Überweisen");
+                send.setBackground(buttonColor);
+                send.setBounds(425, 280, 125, 35);
+
+                JButton cancel = new JButton("Abbrechen");
+                cancel.setBackground(buttonColor);
+                cancel.setBounds(425, 325, 125, 35);
+
+                panel.add(text);
+                panel.add(amount);
+                panel.add(send);
+                panel.add(cancel);
+
+                settingsButton();
+
+                panel.updateUI();
+            }
+        });
+
+        panel.add(sendToPortfolio);
+        panel.add(back);
+        panel.add(money);
 
         panel.updateUI();
     }
 
     private void portfolioMenu() {
+        // TODO: Zeige an wieviele Aktie von welchem Unternehmen es in dem Portfolio gibt
+        // TODO: Geld an die Bank senden
+
         JButton back = new JButton("Zurück");
         back.setBackground(buttonColor);
         back.setBounds(800, 450, 100, 25);
@@ -856,14 +857,10 @@ public class Menu {
         stockLen.setBounds(25, 190, 200, 35);
 
         String stockNamesList = "";
-        if (account.getPortfolio().getStocks() != null || account.getPortfolio().getStocks().length != 0) {
-            for (int i = 0; i < account.getPortfolio().getStocks().length; i++) {
-                if (!stockNamesList.contains(account.getPortfolio().getStocks()[i])) {
-                    if (!stockNamesList.equals("")) {
-                        stockNamesList += ", ";
-                    }
-
-                    stockNamesList += account.getPortfolio().getStocks()[i];
+        if (account.getPortfolio().getStocks() != null) {
+            for (String st : account.getPortfolio().getStocks()) {
+                if (!stockNamesList.contains(st)) {
+                    stockNamesList += st + ", ";
                 }
             }
         }
@@ -873,15 +870,16 @@ public class Menu {
 
         JLabel stockNames = new JLabel("Aktien Namen: " + stockNamesList);
         stockNames.setForeground(textColor);
-        stockNames.setBounds(25, 235, 250, 35);
-
-        panel.updateUI();
+        stockNames.setBounds(25, 235, 450, 35);
 
         panel.add(money);
         panel.add(back);
         panel.add(stocksValue);
         panel.add(stockLen);
         panel.add(stockNames);
+        panel.add(money);
+
+        panel.updateUI();
     }
 
     private void stockInfo(Stock stock) {
@@ -1047,6 +1045,10 @@ public class Menu {
                 verkaufen.setBackground(Color.GREEN);
                 verkaufen.setBounds(400, 325, 125, 35);
 
+                JButton abbrechen = new JButton("Abbrechen");
+                abbrechen.setBackground(Color.RED);
+                abbrechen.setBounds(400, 370, 125, 35);
+
                 JLabel inValidNumber = new JLabel("Bitte gib eine gültige Anzahl an!");
                 inValidNumber.setForeground(Color.RED);
                 inValidNumber.setBounds(385, 425, 200, 25);
@@ -1057,46 +1059,51 @@ public class Menu {
                 notEnough.setBounds(400, 425, 200, 25);
                 notEnough.setVisible(false);
 
+                JLabel successfull = new JLabel("Aktien erfolgreich verkauft");
+                successfull.setForeground(Color.GREEN);
+                successfull.setBounds(390, 375, 200, 25);
+                successfull.setVisible(false);
+
                 verkaufen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         String inputStr = input.getText();
 
+                        inValidNumber.setVisible(false);
                         notEnough.setVisible(false);
                         inValidNumber.setVisible(false);
+                        successfull.setVisible(false);
 
-                        int inputInt = 0;
+                        int stockAmount = account.getPortfolio().getStockAmount(stock.getName());
+                        int inputInt = Integer.parseInt(inputStr);
                         try {
-                            inputInt = Integer.parseInt(inputStr);
-
-                            if (inputInt > 0 && account.getPortfolio().getStocks().length >= inputInt) {
-                                account.getPortfolio().addMoney(inputInt * stock.getCurrentPrice());
+                            if (stockAmount >= inputInt && inputInt > 0) {
                                 account.getPortfolio().removeStock(stock.getName(), inputInt);
+                                account.getPortfolio().addMoney(inputInt * stock.getCurrentPrice());
+                                successfull.setVisible(true);
 
-                                panel.removeAll();
-                                panel.add(successSell);
+                                panel.remove(verkaufen);
+                                panel.remove(abbrechen);
+                                panel.remove(howMuch);
+                                panel.remove(input);
+
                                 panel.updateUI();
-
-                                stockInfo(stock);
-                            } else {
-                                if (!(account.getPortfolio().getStocks().length >= inputInt)) {
+                            }
+                            else {
+                                if (stockAmount < inputInt) {
                                     notEnough.setVisible(true);
                                     panel.updateUI();   
                                 }
-                                else if (!(inputInt > 0)) {
+                                else if (inputInt <= 0) {
                                     inValidNumber.setVisible(true);
-                                    panel.updateUI();
                                 }
+                                panel.updateUI();
                             }
                         } catch (NumberFormatException ex) {
                             System.out.println("Invalid input");
                         }
                     }
                 });
-
-                JButton abbrechen = new JButton("Abbrechen");
-                abbrechen.setBackground(Color.RED);
-                abbrechen.setBounds(400, 370, 125, 35);
 
                 abbrechen.addActionListener(new ActionListener() {
                     @Override
@@ -1108,8 +1115,7 @@ public class Menu {
                         panel.remove(verkaufen);
                         panel.remove(abbrechen);
                         panel.remove(inValidNumber);
-                        panel.remove(successBuy);
-                        panel.remove(successSell);
+                        panel.remove(successfull);
 
                         panel.add(buy);
                         panel.add(sell);
@@ -1124,6 +1130,7 @@ public class Menu {
                 panel.add(verkaufen);
                 panel.add(abbrechen);
                 panel.add(notEnough);
+                panel.add(successfull);
 
                 panel.updateUI();
             }
@@ -1138,26 +1145,13 @@ public class Menu {
             }
         });
 
-        JButton settings = new JButton("Einstellungen");
-        settings.setBackground(buttonColor);
-        settings.setBounds(25, 450, 125, 25);
-
-        settings.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panel.removeAll();
-
-                settingsMenu();
-            }
-        });
-
+        settingsButton();
 
         panel.add(name);
         panel.add(min);
         panel.add(max);
         panel.add(average);
         panel.add(current);
-        panel.add(settings);
         panel.add(back);
         panel.add(buy);
         panel.add(sell);
@@ -1338,7 +1332,7 @@ public class Menu {
     }
     
     //Überprüft auf dd.MM.yyyy Format
-    private boolean isValidBirthdate(String birthdate){
+    private boolean isValidBirthdate(String birthdate) {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         
         format.setLenient(false);

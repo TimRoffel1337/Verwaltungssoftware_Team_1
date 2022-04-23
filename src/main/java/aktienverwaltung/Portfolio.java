@@ -32,6 +32,17 @@ public class Portfolio {
         this.stocks = stocks;
     }
 
+    public int getStockAmount(String stock) {
+        int amount = 0;
+        for (String st : stocks) {
+            if (st.equals(stock)) {
+                amount++;
+            }
+        }
+
+        return amount;
+    }
+
     public void addStock(String stock, int amount) {
         if (this.stocks == null) {
             for (int i = 0; i < amount; i++) {
@@ -90,5 +101,5 @@ public class Portfolio {
 
             this.stocks = temp;
         }
-    }
+    }   
 }
