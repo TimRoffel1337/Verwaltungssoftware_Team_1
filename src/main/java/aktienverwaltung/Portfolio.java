@@ -50,22 +50,45 @@ public class Portfolio {
         }
     }
 
-    //remove a stock
     public void removeStock(String stock, int amount) {
         if (this.stocks == null) {
             return;
         } else {
-            for (int k = 0; k < amount; k++) {
-                String[] temp = new String[this.stocks.length - 1];
+            int counter = 0;
+
+            for (String st : this.stocks) {
+                if (st.equals(stock)) {
+                    counter++;
+                }
+            }
+
+            String[] temp = new String[this.stocks.length - amount];
+            if (counter == amount) {
                 int j = 0;
                 for (int i = 0; i < this.stocks.length; i++) {
-                    if (this.stocks[i] != stock) {
+                    if (!this.stocks[i].equals(stock)) {
                         temp[j] = this.stocks[i];
                         j++;
                     }
                 }
+
                 this.stocks = temp;
+
+                return;
             }
+
+            for (int i = 0; i < counter - amount; i++) {
+                temp[i] = stock;
+            }
+
+            for (int i = 0; i < this.stocks.length; i++) {
+                if (!this.stocks[i].equals(stock)) {
+                    temp[counter - amount] = this.stocks[i];
+                    counter++;
+                }
+            }
+
+            this.stocks = temp;
         }
     }
 }
