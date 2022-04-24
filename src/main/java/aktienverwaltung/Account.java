@@ -1,31 +1,49 @@
 package aktienverwaltung;
 
 public class Account extends Person {
-    String username;
-    String password;
+    private String hashedPassword;
+    private boolean darkMode = false;
+    private Portfolio portfolio;
+    private Bank bank;
 
     //Konstruktor
-    public Account(String name, String birthdate, String email, String phonenumber, String username, String password) {
-        super(name, birthdate, email, phonenumber);
-        this.username = username;
-        this.password = password;
-    }
-
-    //username
-    public String getUsername() {
-        return username;
-    }
-    
-    public void setUsername(String username) {
-        this.username = username;
+    public Account(String firstName, String lastName, String email, String hashedPassword, String birthdate, String phonenumber, Portfolio portfolio, Bank bank) {
+        super(firstName, lastName, email, birthdate, phonenumber);
+        this.hashedPassword = hashedPassword;
+        this.portfolio = portfolio;
+        this.bank = bank;
     }
 
     //password
-    public String getPassword() {
-        return password;
+    public String getHashedPassword() {
+        return hashedPassword;
     }
     
-    public void setPassword(String password) {
-        this.password = password;
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public boolean getDarkmode() {
+        return darkMode;
+    }
+
+    public void setDarkmode(boolean value) {
+        this.darkMode = value;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
     }
 }

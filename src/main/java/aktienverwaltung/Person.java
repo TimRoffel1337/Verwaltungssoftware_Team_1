@@ -1,25 +1,35 @@
 package aktienverwaltung;
 public class Person {
-    String name;
-    String birthdate;
-    String email;
-    String phonenumber;
+    private String firtName;
+    private String lastName;
+    private String birthdate;
+    private String email;
+    private String phonenumber;
 
     //Konstruktor
-    public Person(String name, String birthdate, String email, String phonenumber) {
-        this.name = name;
+    public Person(String firstName, String lastName, String email, String birthdate, String phonenumber) {
+        this.firtName = firstName;
+        this.lastName = lastName;
         this.birthdate = birthdate;
         this.email = email;
         this.phonenumber = phonenumber;
     }
 
     //name
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return this.firtName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
     }
     
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firtName = name;
+    }
+
+    public void setLastName(String name) {
+        this.lastName = name;
     }
 
     //birthdate
@@ -40,7 +50,7 @@ public class Person {
         this.email = email;
     }
       
-    //phonenumberr
+    //phonenumber
     public String getPhonenumber() {
         return phonenumber;
     }
