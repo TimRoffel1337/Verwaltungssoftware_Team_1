@@ -18,10 +18,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.plaf.basic.BasicArrowButton;
 
 import com.google.gson.Gson;
 
@@ -34,8 +34,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Menu {
-    //TODO: Kommentare erstellen damit man weiß was was ist!!!
-
     Gson gson;
 
     JFrame frame = new JFrame();
@@ -65,25 +63,16 @@ public class Menu {
         gson = new Gson();
 
         panel.setLayout(null);
-
-        //ENTFERNEN
-        /*frame.setSize(960, 540);
-        frame.setTitle("Aktienverwaltungs Programm");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.add(panel);
-        frame.setVisible(true);*/
-
-        //stockMenu();
         gui();
-        //start();
     }
 
+    // starts the GUI
     public void gui() {
         String dir = "C:/Users/" + System.getProperty("user.name") + "/Documents/Aktienverwaltung/";
         File ipFile = new File(dir + "ip.json");
         File portFile = new File(dir + "port.json");
 
+        // if the ip and port file don't exist the user must enter the ip and port
         if (!ipFile.exists()) {
             JLabel ipLabel = new JLabel("Server IP:");
             ipLabel.setBounds(380, 150, 150, 20);
@@ -122,6 +111,7 @@ public class Menu {
                 }
             });
         }
+        // if they exist they are read and used
         else {
             ip = "127.0.0.1";
             port = 443;
@@ -152,22 +142,22 @@ public class Menu {
         frame.setSize(960, 540);
         frame.setTitle("Aktienverwaltungs Programm");
 
+        //on window close the connection is closed and the user data gets send to the server
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 System.out.println("Closing");
                 try {
-                    String[] msg = { "updateuser", gson.toJson(account)};
-                    sendMessage(msg);
-
+                    if (socket != null) {
+                        String[] msg = { "updateuser", gson.toJson(account)};
+                        sendMessage(msg);
+                        socket.close();
+                    }
                     if (outPutStreamWriter != null) {
                         outPutStreamWriter.close();
                     }
                     if (inputStreamReader != null) {
                         inputStreamReader.close();
-                    }
-                    if (socket != null) {
-                        socket.close();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -183,6 +173,7 @@ public class Menu {
         frame.setVisible(true);
     }
 
+    // if the connection to the server is not possible the user can retry or go to the settings
     private void connectionNotPossibleMenu() {
         JLabel errorMsg = new JLabel("Es konnte keine Verbindung zum Server hergestellt werden");
         errorMsg.setForeground(Color.RED);
@@ -207,6 +198,7 @@ public class Menu {
         panel.updateUI();
     }
 
+    // the first menu the user sees when a connection to the server is established
     private void startMenu() {
         JButton login = new JButton("Anmelden");
         login.setBackground(buttonColor);
@@ -244,6 +236,7 @@ public class Menu {
         panel.updateUI();
     }
 
+    // opens the settings menu
     private void settingsMenu() {
         JLabel ipLabel = new JLabel("Server IP:");
         ipLabel.setBounds(380, 150, 150, 20);
@@ -285,7 +278,6 @@ public class Menu {
                 String dir = "C:/Users/" + System.getProperty("user.name") + "/Documents/Aktienverwaltung/";
                 File ipFile = new File(dir + "ip.json");
                 File portFile = new File(dir + "port.json");
-
                 saveIpandPort(ipFile, portFile);
 
                 if (darkModeBox.isSelected()) {
@@ -293,7 +285,9 @@ public class Menu {
                     buttonColor = Color.lightGray;
                     textColor = Color.WHITE;
                     fieldColor = Color.lightGray;
-                    account.setDarkmode(true);
+                    if (account != null) {
+                        account.setDarkmode(true);
+                    }
 
                     panel.setBackground(Color.DARK_GRAY);
                     isDarkmode = true;
@@ -305,7 +299,9 @@ public class Menu {
                     textColor = Color.BLACK;
                     buttonColor = Color.WHITE;
                     fieldColor = Color.WHITE;
-                    account.setDarkmode(false);
+                    if (account != null) {
+                        account.setDarkmode(false);
+                    }
 
                     panel.setBackground(Color.WHITE);
                     isDarkmode = false;
@@ -358,6 +354,7 @@ public class Menu {
         panel.updateUI();
     }
 
+    // adds a settings button on the lower left corner to open the settings menu
     private void settingsButton() {
         JButton settings = new JButton("Einstellungen");
         settings.setBackground(buttonColor);
@@ -375,6 +372,7 @@ public class Menu {
         panel.updateUI();
     }
 
+    // opens the menu to register a new account
     private void registerMenu() {
         JLabel email = new JLabel("E-mail:");
         JLabel passwd = new JLabel("Passwort:");
@@ -444,6 +442,7 @@ public class Menu {
         panel.updateUI();
     }
 
+    // second part to register a new account
     private void register2(String email, String passwd) {
         JLabel firstName = new JLabel("Vorname:");
         JLabel lastName = new JLabel("Nachname:");
@@ -530,6 +529,7 @@ public class Menu {
         panel.updateUI();
     }
 
+    // opens the login menu
     private void loginMenu() {
         JLabel email = new JLabel("Email:");
         JLabel passwd = new JLabel("Passwort:");
@@ -612,6 +612,7 @@ public class Menu {
         panel.updateUI();
     }
 
+    // opens the menu after you logged in
     private void menuGui() {
         getStocks();
 
@@ -694,6 +695,7 @@ public class Menu {
         settingsButton();
     }
 
+    // list of stocks
     private void stockMenu() {
         getStocks();
 
@@ -736,7 +738,6 @@ public class Menu {
             JLabel label = new JLabel("Keine Aktien vorhanden");
             label.setForeground(textColor);
             label.setBounds(25, 100, 125, 35);
-    
             panel.add(label);
         }
 
@@ -745,13 +746,14 @@ public class Menu {
         panel.updateUI();
     }
 
+    // open the bank menu
     private void bankMenu() {
         panel.removeAll();
         settingsButton();
 
         JLabel money = new JLabel("Geld: " + account.getBank().getMoney() + " €");
         money.setForeground(textColor);
-        money.setBounds(25, 100, 125, 35);
+        money.setBounds(435, 100, 125, 35);
 
         JButton back = new JButton("Zurück");
         back.setBackground(buttonColor);
@@ -768,32 +770,76 @@ public class Menu {
 
         JButton sendToPortfolio = new JButton("Überweisung zum Portfolio");
         sendToPortfolio.setBackground(buttonColor);
-        sendToPortfolio.setBounds(400, 350, 200, 35);
+        sendToPortfolio.setBounds(375, 175, 200, 35);
+
+        JLabel successfull = new JLabel("Überweisung erfolgreich");
+        successfull.setForeground(Color.GREEN);
+        successfull.setBounds(410, 250, 150, 35);
+        successfull.setVisible(false);
 
         sendToPortfolio.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panel.remove(sendToPortfolio);
+                sendToPortfolio.setVisible(false);
+                successfull.setVisible(false);
 
                 JLabel text = new JLabel("Betrag:");
                 text.setForeground(textColor);
-                text.setBounds(425, 190, 125, 35);
+                text.setBounds(465, 200, 125, 35);
 
                 JTextField amount = new JTextField();
-                amount.setBounds(425, 235, 125, 35);
+                amount.setBounds(437, 235, 100, 25);
 
                 JButton send = new JButton("Überweisen");
-                send.setBackground(buttonColor);
+                send.setBackground(Color.GREEN);
                 send.setBounds(425, 280, 125, 35);
 
                 JButton cancel = new JButton("Abbrechen");
-                cancel.setBackground(buttonColor);
+                cancel.setBackground(Color.RED);
                 cancel.setBounds(425, 325, 125, 35);
+
+                send.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        float input = Float.parseFloat(amount.getText());
+
+                        if (input > 0 && account.getBank().getMoney() - input >= 0) {
+                            account.getBank().removeMoney(input);
+                            account.getPortfolio().addMoney(input);
+
+                            successfull.setVisible(true);
+                            sendToPortfolio.setVisible(true);
+                            panel.remove(text);
+                            panel.remove(amount);
+                            panel.remove(send);
+                            panel.remove(cancel);
+
+                            money.setText("Geld: " + account.getBank().getMoney() + " €");
+
+                            panel.updateUI();
+                        }
+                        else if (input > 0 && account.getBank().getMoney() - input < 0) {
+                            JOptionPane.showMessageDialog(null, "Nicht genug Geld auf dem Konto");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Bitte gebe einen gültigen Betrag ein");
+                        }
+                    }
+                });
+
+                cancel.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        panel.removeAll();
+                        bankMenu();
+                    }
+                });
 
                 panel.add(text);
                 panel.add(amount);
                 panel.add(send);
                 panel.add(cancel);
+                panel.add(successfull);
 
                 settingsButton();
 
@@ -808,9 +854,10 @@ public class Menu {
         panel.updateUI();
     }
 
+    // opens the portfolio menu
     private void portfolioMenu() {
         // TODO: Zeige an wieviele Aktie von welchem Unternehmen es in dem Portfolio gibt
-        // TODO: Geld an die Bank senden
+        settingsButton();
 
         JButton back = new JButton("Zurück");
         back.setBackground(buttonColor);
@@ -848,6 +895,82 @@ public class Menu {
             }
         }
 
+        JLabel successfull = new JLabel("Überweisung erfolgreich");
+        successfull.setForeground(Color.GREEN);
+        successfull.setBounds(410, 250, 150, 35);
+        successfull.setVisible(false);
+
+        JButton sendToBank = new JButton("Überweisung zur Bank");
+        sendToBank.setBackground(buttonColor);
+        sendToBank.setBounds(380, 350, 200, 35);
+
+        sendToBank.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendToBank.setVisible(false);
+                successfull.setVisible(false);
+
+                JLabel text = new JLabel("Betrag:");
+                text.setForeground(textColor);
+                text.setBounds(465, 200, 125, 35);
+
+                JTextField amount = new JTextField();
+                amount.setBounds(437, 235, 100, 25);
+
+                JButton send = new JButton("Überweisen");
+                send.setBackground(Color.GREEN);
+                send.setBounds(425, 280, 125, 35);
+
+                JButton cancel = new JButton("Abbrechen");
+                cancel.setBackground(Color.RED);
+                cancel.setBounds(425, 325, 125, 35);
+
+                send.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        float input = Float.parseFloat(amount.getText());
+
+                        if (input > 0 && account.getPortfolio().getMoney() - input >= 0) {
+                            account.getPortfolio().removeMoney(input);
+                            account.getBank().addMoney(input);
+
+                            successfull.setVisible(true);
+                            sendToBank.setVisible(true);
+                            panel.remove(text);
+                            panel.remove(amount);
+                            panel.remove(send);
+                            panel.remove(cancel);
+
+                            money.setText("Portfolio Geld: " + account.getPortfolio().getMoney() + " €");
+
+                            panel.updateUI();
+                        }
+                        else if (input > 0 && account.getPortfolio().getMoney() - input < 0) {
+                            JOptionPane.showMessageDialog(null, "Nicht genug Geld auf dem Portfolio");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Bitte gebe einen gültigen Betrag ein");
+                        }
+                    }
+                });
+
+                cancel.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        panel.removeAll();
+                        portfolioMenu();
+                    }
+                });
+
+                panel.add(text);
+                panel.add(amount);
+                panel.add(send);
+                panel.add(cancel);
+                panel.add(successfull);
+                panel.updateUI();
+            }
+        });
+
         JLabel stocksValue = new JLabel("Portfolio Aktien Wert: " + pStocksValue);
         stocksValue.setForeground(textColor);
         stocksValue.setBounds(25, 145, 200, 35);
@@ -878,10 +1001,12 @@ public class Menu {
         panel.add(stockLen);
         panel.add(stockNames);
         panel.add(money);
+        panel.add(sendToBank);
 
         panel.updateUI();
     }
 
+    // opens the stock infos menu. Shows the stock infos and buying and selling
     private void stockInfo(Stock stock) {
         JLabel name = new JLabel("Name: " + stock.getName());
         JLabel min = new JLabel("Min: " + stock.getMin() + "€");
@@ -940,31 +1065,15 @@ public class Menu {
                 kaufen.setBackground(Color.GREEN);
                 kaufen.setBounds(400, 325, 125, 35);
 
-                JLabel notEnough = new JLabel("Du hast nicht genug Geld!");
-                notEnough.setForeground(Color.RED);
-                notEnough.setBounds(400, 425, 200, 25);
-                notEnough.setVisible(false);
-
-                JLabel isValidNumber = new JLabel("Bitte gib eine gültige Anzahl an!");
-                isValidNumber.setForeground(Color.RED);
-                isValidNumber.setBounds(385, 425, 200, 25);
-                isValidNumber.setVisible(false);
-
                 kaufen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         String inputStr = input.getText();
-
-                        notEnough.setVisible(false);
-                        isValidNumber.setVisible(false);
-
-                        int inputInt = 0;
+                        int input = Integer.parseInt(inputStr);
                         try {
-                            inputInt = Integer.parseInt(inputStr);
-
-                            if (inputInt > 0 && account.getPortfolio().getMoney() >= inputInt * stock.getCurrentPrice()) {
-                                account.getPortfolio().removeMoney(inputInt * stock.getCurrentPrice());
-                                account.getPortfolio().addStock(stock.getName(), inputInt);
+                            if (input > 0 && account.getPortfolio().getMoney() >= input * stock.getCurrentPrice()) {
+                                account.getPortfolio().removeMoney(input * stock.getCurrentPrice());
+                                account.getPortfolio().addStock(stock.getName(), input);
 
                                 panel.removeAll();
                                 panel.add(successBuy);
@@ -972,12 +1081,11 @@ public class Menu {
 
                                 stockInfo(stock);
                             } else {
-                                if (!(account.getPortfolio().getMoney() >= inputInt * stock.getCurrentPrice())) {
-                                    notEnough.setVisible(true);
-                                    panel.updateUI();   
+                                if (!(account.getPortfolio().getMoney() >= input * stock.getCurrentPrice())) {
+                                    JOptionPane.showMessageDialog(null, "Nicht genug Geld!");
                                 }
-                                else if (!(inputInt > 0)) {
-                                    isValidNumber.setVisible(true);
+                                else if (!(input > 0)) {
+                                    JOptionPane.showMessageDialog(null, "Bitte gebe einen gültigen Betrag ein");
                                     panel.updateUI();
                                 }
                             }
@@ -994,15 +1102,10 @@ public class Menu {
                 abbrechen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        notEnough.setVisible(false);
-                        isValidNumber.setVisible(false);
-
                         panel.remove(howMuch);
                         panel.remove(input);
                         panel.remove(kaufen);
                         panel.remove(abbrechen);
-                        panel.remove(notEnough);
-                        panel.remove(isValidNumber);
                         panel.remove(successBuy);
                         panel.remove(successSell);
 
@@ -1013,8 +1116,6 @@ public class Menu {
                     }
                 });
 
-                panel.add(isValidNumber);
-                panel.add(notEnough);
                 panel.add(howMuch);
                 panel.add(input);
                 panel.add(kaufen);
@@ -1049,16 +1150,6 @@ public class Menu {
                 abbrechen.setBackground(Color.RED);
                 abbrechen.setBounds(400, 370, 125, 35);
 
-                JLabel inValidNumber = new JLabel("Bitte gib eine gültige Anzahl an!");
-                inValidNumber.setForeground(Color.RED);
-                inValidNumber.setBounds(385, 425, 200, 25);
-                inValidNumber.setVisible(false);
-
-                JLabel notEnough = new JLabel("Du hast nicht genug Aktien");
-                notEnough.setForeground(Color.RED);
-                notEnough.setBounds(400, 425, 200, 25);
-                notEnough.setVisible(false);
-
                 JLabel successfull = new JLabel("Aktien erfolgreich verkauft");
                 successfull.setForeground(Color.GREEN);
                 successfull.setBounds(390, 375, 200, 25);
@@ -1067,19 +1158,15 @@ public class Menu {
                 verkaufen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String inputStr = input.getText();
-
-                        inValidNumber.setVisible(false);
-                        notEnough.setVisible(false);
-                        inValidNumber.setVisible(false);
                         successfull.setVisible(false);
 
                         int stockAmount = account.getPortfolio().getStockAmount(stock.getName());
-                        int inputInt = Integer.parseInt(inputStr);
+                        String inputStr = input.getText();
+                        int input = Integer.parseInt(inputStr);
                         try {
-                            if (stockAmount >= inputInt && inputInt > 0) {
-                                account.getPortfolio().removeStock(stock.getName(), inputInt);
-                                account.getPortfolio().addMoney(inputInt * stock.getCurrentPrice());
+                            if (stockAmount >= input && input > 0) {
+                                account.getPortfolio().removeStock(stock.getName(), input);
+                                account.getPortfolio().addMoney(input * stock.getCurrentPrice());
                                 successfull.setVisible(true);
 
                                 panel.remove(verkaufen);
@@ -1090,12 +1177,12 @@ public class Menu {
                                 panel.updateUI();
                             }
                             else {
-                                if (stockAmount < inputInt) {
-                                    notEnough.setVisible(true);
+                                if (stockAmount < input) {
+                                    JOptionPane.showMessageDialog(null, "Nicht genug Aktien!");
                                     panel.updateUI();   
                                 }
-                                else if (inputInt <= 0) {
-                                    inValidNumber.setVisible(true);
+                                else if (input <= 0) {
+                                    JOptionPane.showMessageDialog(null, "Bitte gebe einen gültigen Betrag ein");
                                 }
                                 panel.updateUI();
                             }
@@ -1108,13 +1195,10 @@ public class Menu {
                 abbrechen.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        inValidNumber.setVisible(false);
-
                         panel.remove(howMuch);
                         panel.remove(input);
                         panel.remove(verkaufen);
                         panel.remove(abbrechen);
-                        panel.remove(inValidNumber);
                         panel.remove(successfull);
 
                         panel.add(buy);
@@ -1124,12 +1208,10 @@ public class Menu {
                     }
                 });
 
-                panel.add(inValidNumber);
                 panel.add(howMuch);
                 panel.add(input);
                 panel.add(verkaufen);
                 panel.add(abbrechen);
-                panel.add(notEnough);
                 panel.add(successfull);
 
                 panel.updateUI();
@@ -1159,6 +1241,7 @@ public class Menu {
         panel.updateUI();
     }
 
+    // gets every stock from the server
     private void getStocks() {
         String[] msg = { "getstocks" };
         sendMessage(msg);
@@ -1177,6 +1260,7 @@ public class Menu {
         System.out.println("Successfully got all stocks");
     }
 
+    // command based. Won't work because the app is not multithreaded
     public void start() {
         String dir = "C:/Users/" + System.getProperty("user.name") + "/Documents/Aktienverwaltung/";
         File ipPath = new File(dir);
@@ -1242,6 +1326,7 @@ public class Menu {
         }
     }
 
+    // connects to the server
     private boolean connectToServer() {
         try {
             socket = new Socket(ip, port);
@@ -1281,6 +1366,7 @@ public class Menu {
         return null;
     }
 
+    // text based account register
     public void register(Scanner scanner) {
         /*bufferedReader = new BufferedReader(inputStreamReader);
         String userName = "";
@@ -1382,6 +1468,7 @@ public class Menu {
         }
     }
 
+    // saves the server ip and port into a file
     private void saveIpandPort(File ipFile, File portFile) {
         try {
             BufferedWriter ipWriter = new BufferedWriter(new FileWriter(ipFile));
@@ -1396,6 +1483,7 @@ public class Menu {
         }
     }
 
+    // send a message to the server
     private void sendMessage(String[] msg) {
         try {
             bufferedWriter.write(gson.toJson(msg));
