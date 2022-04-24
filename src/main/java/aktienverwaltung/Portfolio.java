@@ -34,9 +34,11 @@ public class Portfolio {
 
     public int getStockAmount(String stock) {
         int amount = 0;
-        for (String st : stocks) {
-            if (st.equals(stock)) {
-                amount++;
+        if (stocks != null && stocks.length > 0) {
+            for (String st : stocks) {
+                if (st.equals(stock)) {
+                    amount++;
+                }
             }
         }
 
