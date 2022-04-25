@@ -12,7 +12,7 @@ values = 543$
 name = "microsoft" 
 }
 
-@startuml
+
 object Server2{
 gson: new Gson()
 dir : "C:/user/programmx86/portfolio/Server2"
@@ -29,9 +29,9 @@ stockName : Microsoft
 file: File2 
 contents: "C:/user/programmx86/portfolio/Server2"
 }
-@enduml
 
-@startuml
+
+
 
 object EchoThread1 {
 
@@ -59,7 +59,7 @@ object EchoThread1 {
  checker : True
  userFile : File4
 }
-@enduml
+
 
 object ludwig {
 username = "Ludwig187"
@@ -73,4 +73,9 @@ birthdate = "7.09.2005"
 email = "Kevin-KeulenKroeger@gmail.com" 
 phonenumber = +49 1223 43214384
 }  
+app1 -> Server2 
+Server2 -> EchoThread1 
+Server2 -> microsoft 
+Server2 -> kroeger
+kroeger -> ludwig
 @enduml

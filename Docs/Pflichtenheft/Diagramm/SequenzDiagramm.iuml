@@ -1,39 +1,31 @@
 @startuml
 
-Person -> Anmelden :login()
-Anmelden --> Person : boolean true
-Person -> registrieren :registrieren()
-registrieren -> Person :string() 
-Person -> Anmelden  :login()
-Anmelden -> Menü 
-Menü -> MenüFinazen : input() 
-MenüFinazen -> EinuAus.Auszahlen :input ()  
-Konto --> EinuAus.Auszahlen : boolean false
-EinuAus.Auszahlen -> MenüFinazen 
-EinuAus.Auszahlen-> Konto : check()
-Konto --> EinuAus.Auszahlen : boolean true 
-Konto -> EinuAus.Auszahlen : String (Wie viel willst du abheben?)
-EinuAus.Auszahlen -> Konto : input()
-Konto -> Lequide.Mittel : int = Ein.AusZahlen ()
-Lequide.Mittel -> Konto : String Konto Geld(Konto -+ Ein.AusZahlen)
-Konto -> Person : String ("Neuer Konto Stand Beträgt " + Konto Geld "€")
-Lequide.Mittel -> Person : String ("Geld wurde Aufgeladen " + Lequide.Mittel "€")
-Lequide.Mittel -> MenüFinazen
-MenüFinazen -> Zurück :input (Enter)
-Zurück -> Menü
-Menü -> Abmelden : input(Enter)
-Abmelden -> Person :
-Person -> Gson:
+Menü -> Person :login()
+Person --> Menü : boolean false
+Menü -> Person : registrieren()
+Person --> Menü : boolean
+Person -> Konto : ausZahlen(int betrag)  
+Konto --> Person : boolean
+Person -> Konto : einZahlen(int betrag)
+Konto --> Person : boolean
+Person -> Konto : abheben
+Konto -> Portfolio : ausZahlen()
+Portfolio --> Konto : booean
+Konto -> Portfolio : einZahlen()
+Portfolio --> Konto : boolean
+Portfolio -> Menü
+Menü -> Person : abmelden()
+Person --> Menü : boolean
+Menü -> Gson:
 
 @enduml
 
 @startuml
 
-Person -> Anmelden :login()
-Anmelden --> Person : boolean true
-Person -> registrieren :registrieren()
-registrieren -> Person :string() 
-Person -> Anmelden  :login()
+Menü -> Person : login()
+Person --> Menü : boolean
+Menü -> Person : registrieren()
+Person --> Menü : boolean
 Anmelden -> Menü 
 Menü -> MenüFinanzen : input() 
 MenüFinazen -> KaufuVerkaufen :input()

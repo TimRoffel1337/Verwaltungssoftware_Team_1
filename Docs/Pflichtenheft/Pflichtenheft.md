@@ -39,7 +39,7 @@ Nach der Anmeldung kann der Benutzer den Menüpunkt Finazen Ausführen. Dort wir
 
 ##### **Einazhalen und Auszahlen**
 Wenn man diesen Menüpunkt nutzt kann mann auf ein Virtuelles Konto zugreifen, welches jeder Nutzer beim einloggen erstellt bekommt. 1.000.000 ist das Kapital welches auf diesen Konto vorhanden sind. Wenn du nun den Konto ein bestimmten betrag entzieht wird dieses unter dem Menüpunkt "Lequide-Mittel" aufgeladen. Anders herum natürlich auch. 
-Dies kann man mit dem comment machen : _____________________ und anderherum mit _____________ machen. 
+ 
 ##### **Kaufen und Verkaufen** 
 Wenn dieser Menüpunkt wählt kommt man in die Ansicht verschiedner Aktien und deren Werte. 
 Dieser Beinhaltet genau so wie bei den Aktien Menüpunkt eine mit GUI erstellten Kurs der Aktie. So kann man nachvollziehen ob diese Aktie Stabil ist usw. Je mach dem hat die Aktie auch ihren Wert, welcher Steigen oder auch Fallen kann. Wenn man nun eine Aktie Kaufen will kann man mit dem Kapital des Menüpunkt "Lequide-Mittel" eine Aktien kaufen. Diesen kauf kann man aber in dem Kaufen und Verkaufen Menüpunkt tätigen.
@@ -86,32 +86,23 @@ TODO #15 #14 Diagramme fehlen (der einzlnen Aktionen)
 
 #### **Diagramm (Aktivitätsdiagramm) Funktion Fach anlegen**
 
-![your-UML-diagram-name](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/teach404W/agileProjekt_2_Java/main/Docs/Pflichtenheft/Diagramme/AnwendungsFall_Fach_anlegen.iuml)
+![Aktivitäten(alle)](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/Aktivit%C3%A4tenDiagramm.iuml)
 
-### **Note anlegen()**
-TOFILL
+### **KlassendiagrammClient**
 
-#### **Beschreibung METHODE**
-TOFILL
+![Clint-Klass](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/ClientKlassenDiagramm.iuml)
 
-#### **Diagramm METHODE**
-TOFILL
+### **Klassendiagramm Server**
 
+![Server-Klass](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/ServerKlassenDiagramm.iuml)
 
+### **ObjektdiagrammClient**
 
-## 3. Diagramm Dokumentation
+![Client-Objekt](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/ClientObjektDiagramm.iuml)
 
+### **ObjektdiagrammServer** 
 
-### **Klassendiagramm**
+![Server-Obejekt](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/ServerObjektDiagramm.iuml)
 
-![your-UML-diagram-name](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/teach404W/agileProjekt_2_Java/main/Docs/Pflichtenheft/Diagramme/Klassendiagramm.iuml)
-
-
-### **Objektdiagramm**
-TOFILL
-
-TODO #13 #12 Objektdiagramm
-
-
-TODO #10 Squenzdiagramm fehlt
-
+### **SeqzernzDiagramm**
+![SequenzDiagramm](https://github.com/HEBK-BGM/Verwaltungssoftware_Team_1/blob/main/Docs/Pflichtenheft/Diagramm/SequenzDiagramm.iuml) 
