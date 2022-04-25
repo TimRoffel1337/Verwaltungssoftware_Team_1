@@ -39,7 +39,7 @@ Nach der Anmeldung kann der Benutzer den Menüpunkt Finazen Ausführen. Dort wir
 
 ##### **Einazhalen und Auszahlen**
 Wenn man diesen Menüpunkt nutzt kann mann auf ein Virtuelles Konto zugreifen, welches jeder Nutzer beim einloggen erstellt bekommt. 1.000.000 ist das Kapital welches auf diesen Konto vorhanden sind. Wenn du nun den Konto ein bestimmten betrag entzieht wird dieses unter dem Menüpunkt "Lequide-Mittel" aufgeladen. Anders herum natürlich auch. 
-Dies kann man mit dem comment machen : _____________________ und anderherum mit _____________ machen. 
+ 
 ##### **Kaufen und Verkaufen** 
 Wenn dieser Menüpunkt wählt kommt man in die Ansicht verschiedner Aktien und deren Werte. 
 Dieser Beinhaltet genau so wie bei den Aktien Menüpunkt eine mit GUI erstellten Kurs der Aktie. So kann man nachvollziehen ob diese Aktie Stabil ist usw. Je mach dem hat die Aktie auch ihren Wert, welcher Steigen oder auch Fallen kann. Wenn man nun eine Aktie Kaufen will kann man mit dem Kapital des Menüpunkt "Lequide-Mittel" eine Aktien kaufen. Diesen kauf kann man aber in dem Kaufen und Verkaufen Menüpunkt tätigen.
