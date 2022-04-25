@@ -18,7 +18,7 @@ Wir wollen ein Aktien Portfolio erstellen mit einer einfachen Menü führung vor
 
 ### **Menüführung**
  
-
+TODO #16 Grafik der konkreten Menüführung
 ## 2. Beschreibung des Funktionsablaufes
 
 
@@ -81,6 +81,8 @@ Bei deisem Menüpunkt kannst der Nutzer aus dem Portfolio auloggen, falls er mit
 **Besonderheiten**
 Das eigentliche Programm läuft auf einen Server, die clients holen sich die daten von server. Die Aktien können nach bielieben hinzugefügt werden und haben kein maximum. Die Ersten beide Menüpunkte verfügen über ein Untern Menüpunkt. Ebendfalls besonders ist, dass man wieder in Main-Menü zurück kehren kann. Außerdem kann man nicht mehr Geld in die Aktien investieren, wenn das "Guthaben" bzw auch das Konto komplett leer sind. 
 
+
+TODO #15 #14 Diagramme fehlen (der einzlnen Aktionen)
 
 #### **Diagramm (Aktivitätsdiagramm) Funktion Fach anlegen**
 
