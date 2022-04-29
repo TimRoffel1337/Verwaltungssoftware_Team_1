@@ -332,10 +332,13 @@ public class Menu {
                     }
                 }
                 else {
-                    if (socket != null) {
+                    if (socket != null && account != null) {
                         menuGui();
                     }
-                    else {
+                    else if (account == null) {
+                        gui();
+                    }
+                    else if (socket != null) {
                         account = null;
                         connectionNotPossibleMenu();
                     }
